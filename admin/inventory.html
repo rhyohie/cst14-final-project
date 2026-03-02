@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Inventory</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; margin: 10px 0; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #999; }
+    </style>
+</head>
+<body class="bg-[#659492] h-screen flex flex-col overflow-hidden text-[#333]">
+
+    <header class="h-[80px] flex justify-between items-center px-10 text-white shrink-0">
+        <div class="flex items-center gap-3 font-bold text-lg">
+            <img src="../icons/logo.svg" alt="Logo" class="w-8 h-8">
+            <span>Pet Stay-tion</span>
+        </div>
+        
+        <div class="flex items-center gap-3 font-medium">
+            <img src="../icons/Pfp.jpg" alt="Admin" class="w-9 h-9 rounded-full object-cover bg-gray-300">
+            <span>Admin</span>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        
+        <aside class="w-[280px] flex flex-col justify-between p-6 pb-10 shrink-0">
+            <nav class="flex flex-col gap-4 mt-4">
+                
+                <a href="overview.html" class="flex items-center gap-4 px-6 py-3 font-bold text-white hover:bg-white/10 rounded-full transition-colors">
+                    <img src="overviewA.svg" alt="Overview" class="w-6 h-6 brightness-0 invert">
+                    <span>Overview</span>
+                </a>
+
+                <a href="#" class="flex items-center gap-4 px-6 py-3 bg-white text-[#659492] rounded-full font-bold shadow-md transition-transform hover:scale-105">
+                    <img src="inventoryA.svg" alt="Inventory" class="w-6 h-6">
+                    <span>Inventory</span>
+                </a>
+
+                <a href="sales.html" class="flex items-center gap-4 px-6 py-3 font-bold text-white hover:bg-white/10 rounded-full transition-colors">
+                    <img src="salesI.svg" alt="Sales" class="w-6 h-6 brightness-0 invert">
+                    <span>Sales</span>
+                </a>
+
+                <a href="users.html" class="flex items-center gap-4 px-6 py-3 font-bold text-white hover:bg-white/10 rounded-full transition-colors">
+                    <img src="usersI.svg" alt="Customers" class="w-6 h-6 brightness-0 invert">
+                    <span>Customers</span>
+                </a>
+
+                <a href="../Homepage/homepage.html" class="mt-4">
+                    <button class="w-full py-3 bg-white text-[#659492] font-bold rounded-full shadow-md hover:bg-gray-100 transition flex items-center justify-center gap-2">
+                        <span>Go to Shop</span>
+                    </button>                    
+                </a>                
+            </nav>
+
+            <div class="flex flex-col">
+                <a href="../login/login.html">
+                    <button class="w-full py-3 bg-white text-[#333] font-bold rounded-full shadow-md hover:bg-gray-100 transition">
+                        Log Out
+                    </button>
+                </a>
+            </div>
+        </aside>
+
+        <main class="flex-1 bg-white rounded-tl-[50px] p-4 md:p-12 overflow-hidden relative flex justify-center items-center">
+            
+            <div class="bg-[#F3F4F6] w-full max-w-6xl h-[85vh] rounded-[30px] shadow-inner relative flex flex-col overflow-hidden">
+                
+                <div class="flex-1 overflow-y-auto custom-scrollbar p-8">
+                    
+                    <h1 class="text-3xl font-extrabold text-gray-800 mb-6">Welcome Admin!</h1>
+
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+                        <div class="relative w-full md:max-w-md">
+                            <input type="text" placeholder="Search Products..." class="w-full pl-6 pr-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:border-[#659492] text-gray-600 shadow-sm">
+                        </div>
+                        <button id="openModalBtn" class="bg-[#659492] hover:bg-[#537a78] text-white font-bold py-3 px-8 rounded-full shadow-md transition transform hover:scale-105">
+                            Add New Product
+                        </button>
+                    </div>
+
+                    <div class="flex gap-3 mb-8 overflow-x-auto pb-2">
+    <button class="filter-btn bg-[#659492] text-white px-8 py-2 rounded-full font-bold shadow-sm transition border border-transparent">All</button>
+    
+    <button class="filter-btn bg-white text-gray-600 px-8 py-2 rounded-full font-bold shadow-sm hover:bg-gray-50 transition border border-transparent hover:border-gray-200">Accessories</button>
+    
+    <button class="filter-btn bg-white text-gray-600 px-8 py-2 rounded-full font-bold shadow-sm hover:bg-gray-50 transition border border-transparent hover:border-gray-200">Food</button>
+    
+    <button class="filter-btn bg-white text-gray-600 px-8 py-2 rounded-full font-bold shadow-sm hover:bg-gray-50 transition border border-transparent hover:border-gray-200">Treats</button>
+</div>
+
+                    <div class="bg-white p-6 rounded-[20px] shadow-sm mb-6">
+                        <div class="flex justify-between items-center text-sm font-bold text-gray-800 mb-4 px-4">
+                            <span class="w-[15%]">Recently added</span>
+                            <span class="w-[25%] text-left">Name</span>
+                            <span class="w-[20%] text-center">Category</span>
+                            <span class="w-[15%] text-center">Quantity</span>
+                            <span class="w-[15%] text-right">Price</span>
+                        </div>
+
+                        <div id="recentList" class="flex items-center justify-between px-4 py-2">
+                            <!-- Recently added product will be injected here -->
+                            <div class="w-full text-center text-gray-500">Loading recent product...</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-[20px] shadow-sm flex flex-col gap-3">
+                        
+                        <div class="flex justify-between items-center text-sm font-bold text-gray-800 mb-2 px-8">
+                            <span class="w-[10%]">Products</span>
+                            <span class="w-[25%] text-center">Name</span>
+                            <span class="w-[20%] text-center">Category</span>
+                            <span class="w-[15%] text-center">Quantity</span>
+                            <span class="w-[15%] text-left pl-8">Price</span>
+                            <span class="w-[15%]"></span> </div>
+
+                        <div id="productsList" class="flex flex-col gap-2">
+                            <!-- Products will be loaded here dynamically -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            
+        </main>
+    </div>
+
+    <div id="addProductModal" class="fixed inset-0 z-50 hidden justify-center items-center bg-black/50 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-3xl rounded-[30px] shadow-2xl p-8 relative m-4">
+            
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800" id="modalTitle">Add New Product</h2>
+                <button id="closeModalBtn" class="text-gray-500 hover:text-gray-700 text-3xl leading-none">&times;</button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-8">
+                
+                <div class="flex flex-col gap-4">
+                    <div class="w-full aspect-square bg-[#E5E7EB] rounded-2xl flex items-center justify-center relative group cursor-pointer overflow-hidden">
+                        <img src="../icons/logo.svg" alt="Placeholder" class="w-20 h-20 opacity-30">
+                        <div class="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <img src="../icons/camera.svg" alt="Upload" class="w-10 h-10 brightness-0 invert">
+                        </div>
+                        <input type="file" class="absolute inset-0 opacity-0 cursor-pointer">
+                    </div>
+                </div>
+
+                <form id="productForm" class="flex flex-col gap-5">
+                    <input type="hidden" id="productId">
+                    
+                    <div class="flex flex-col gap-1">
+                        <label class="text-sm font-bold text-gray-700 ml-4">Product Name</label>
+                        <input type="text" id="productName" class="w-full px-6 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-[#659492] bg-gray-50" required>
+                    </div>
+
+                    <div class="flex flex-col gap-1">
+                        <label class="text-sm font-bold text-gray-700 ml-4">Category</label>
+                        <div class="relative">
+                            <select id="productCategory" class="w-full px-6 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-[#659492] bg-gray-50 appearance-none cursor-pointer text-gray-600" required>
+                                <option value="">Select Category</option>
+                                <option value="Accessories">Accessories</option>
+                                <option value="Food">Food</option>
+                                <option value="Treats">Treats</option>
+                            </select>
+                            <div class="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-1">
+                        <label class="text-sm font-bold text-gray-700 ml-4">Price</label>
+                        <div class="relative">
+                            <span class="absolute left-6 top-1/2 -translate-y-1/2 font-bold text-gray-500">₱</span>
+                            <input type="number" id="productPrice" class="w-full pl-10 pr-6 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-[#659492] bg-gray-50" step="0.01" required>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-1">
+                        <label class="text-sm font-bold text-gray-700 ml-4">Quantity</label>
+                        <input type="number" id="productQuantity" class="w-full px-6 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-[#659492] bg-gray-50" required>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="flex justify-end gap-4 mt-8">
+                <button id="cancelModalBtn" class="px-8 py-3 bg-gray-100 text-gray-600 font-bold rounded-full hover:bg-gray-200 transition">Cancel</button>
+                <button id="submitBtn" class="px-8 py-3 bg-[#659492] text-white font-bold rounded-full hover:bg-[#537a78] transition shadow-md">Add Product</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        let allProducts = [];
+        let currentCategory = 'All';
+        let editingProductId = null;
+
+        const modal = document.getElementById('addProductModal');
+        const openBtn = document.getElementById('openModalBtn');
+        const closeBtn = document.getElementById('closeModalBtn');
+        const cancelBtn = document.getElementById('cancelModalBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const modalTitle = document.getElementById('modalTitle');
+        const productForm = document.getElementById('productForm');
+        const productNameInput = document.getElementById('productName');
+        const productCategoryInput = document.getElementById('productCategory');
+        const productPriceInput = document.getElementById('productPrice');
+        const productQuantityInput = document.getElementById('productQuantity');
+        const productIdInput = document.getElementById('productId');
+        const searchInput = document.querySelector('input[placeholder="Search Products..."]');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+
+        loadProducts();
+        loadRecent();
+
+        function openModal(productId = null) {
+            editingProductId = productId;
+            if (productId) {
+                const product = allProducts.find(p => p.id === productId);
+                if (product) {
+                    modalTitle.textContent = 'Edit Product';
+                    submitBtn.textContent = 'Update Product';
+                    productIdInput.value = productId;
+                    productNameInput.value = product.name;
+                    productCategoryInput.value = product.category;
+                    productPriceInput.value = product.price;
+                    productQuantityInput.value = product.quantity;
+                }
+            } else {
+                modalTitle.textContent = 'Add New Product';
+                submitBtn.textContent = 'Add Product';
+                productForm.reset();
+                productIdInput.value = '';
+            }
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            productForm.reset();
+            editingProductId = null;
+        }
+
+        openBtn.addEventListener('click', () => openModal());
+        closeBtn.addEventListener('click', closeModal);
+        cancelBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        async function loadProducts() {
+            try {
+                const query = new URLSearchParams({
+                    search: searchInput.value,
+                    category: currentCategory
+                });
+                const response = await fetch(`/api/products?${query}`);
+                allProducts = await response.json();
+                renderProducts();
+            } catch (error) {
+                console.error('Error loading products:', error);
+                alert('Failed to load products');
+            }
+        }
+
+        function renderProducts() {
+            const container = document.getElementById('productsList');
+            if (allProducts.length === 0) {
+                container.innerHTML = '<p class="text-center text-gray-500 py-8">No products found</p>';
+                return;
+            }
+
+            container.innerHTML = allProducts.map(product => {
+                const quantityColor = product.quantity > 10 ? 'bg-[#659492]' : product.quantity > 0 ? 'bg-[#FCD34D]' : 'bg-[#EF4444]';
+                return `
+                    <div class="border border-gray-800 rounded-full px-8 py-3 flex items-center justify-between hover:bg-gray-50 transition text-sm md:text-base">
+                        <span class="w-[10%] text-gray-500 font-medium">#${product.id}</span>
+                        <span class="w-[25%] text-center font-medium text-gray-700">${product.name}</span>
+                        <span class="w-[20%] text-center text-gray-600">${product.category}</span>
+                        <div class="w-[15%] flex justify-center">
+                            <span class="${quantityColor} text-white px-6 py-1 rounded-full font-bold text-sm">${product.quantity}</span>
+                        </div>
+                        <span class="w-[15%] text-left pl-8 font-bold text-gray-700">₱${product.price}</span>
+                        <div class="w-[15%] flex justify-end gap-3">
+                            <button onclick="openModal(${product.id})" class="hover:opacity-70"><img src="../icons/edit.svg" class="w-6 h-6"></button>
+                            <button onclick="deleteProduct(${product.id})" class="hover:opacity-70"><img src="../icons/Trash.svg" class="w-6 h-6"></button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        submitBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const name = productNameInput.value;
+            const category = productCategoryInput.value;
+            const price = productPriceInput.value;
+            const quantity = productQuantityInput.value;
+
+            if (!name || !category || !price || quantity === '') {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            try {
+                const url = editingProductId ? `/api/admin/products/${editingProductId}` : '/api/admin/products';
+                const method = editingProductId ? 'PUT' : 'POST';
+
+                const response = await fetch(url, {
+                    method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, category, price, quantity })
+                });
+
+                if (response.ok) {
+                    closeModal();
+                    loadProducts();
+                    loadRecent();
+                } else {
+                    const error = await response.json();
+                    alert(error.error || 'Failed to save product');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error saving product');
+            }
+        });
+
+        async function deleteProduct(productId) {
+            if (!confirm('Are you sure you want to delete this product?')) return;
+
+            try {
+                const response = await fetch(`/api/admin/products/${productId}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    loadProducts();
+                    loadRecent();
+                } else {
+                    const error = await response.json();
+                    alert(error.error || 'Failed to delete product');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error deleting product');
+            }
+        }
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('bg-[#659492]', 'text-white');
+                    btn.classList.add('bg-white', 'text-gray-600');
+                });
+                button.classList.remove('bg-white', 'text-gray-600');
+                button.classList.add('bg-[#659492]', 'text-white');
+                currentCategory = button.innerText;
+                loadProducts();
+            });
+        });
+
+        searchInput.addEventListener('input', () => {
+            loadProducts();
+        });
+
+        async function loadRecent() {
+            try {
+                const res = await fetch('../admin/products.json');
+                if (!res.ok) throw new Error('Failed to fetch products.json');
+                const products = await res.json();
+                if (!Array.isArray(products) || products.length === 0) {
+                    document.getElementById('recentList').innerHTML = '<div class="w-full text-center text-gray-500">No recent products</div>';
+                    return;
+                }
+
+                products.sort((a, b) => {
+                    const da = a.created_at ? new Date(a.created_at) : new Date(0);
+                    const db = b.created_at ? new Date(b.created_at) : new Date(0);
+                    return db - da || (b.id || 0) - (a.id || 0);
+                });
+
+                const recent = products[0];
+                const recentContainer = document.getElementById('recentList');
+                if (!recentContainer) return;
+
+                const imgHtml = recent.image_url ? `<img src="${escapeHtml(recent.image_url)}" alt="Product" class="w-8 h-8">` : '<img src="../icons/logo.svg" alt="Product" class="w-8 h-8 opacity-50">';
+
+                recentContainer.innerHTML = `
+                    <div class="w-[15%]">
+                        <div class="w-16 h-12 bg-[#E5E7EB] rounded-lg overflow-hidden flex items-center justify-center">
+                            ${imgHtml}
+                        </div>
+                    </div>
+                    <span class="w-[25%] font-bold text-xl text-gray-800">${escapeHtml(recent.name)}</span>
+                    <span class="w-[20%] text-center text-gray-600">${escapeHtml(recent.category)}</span>
+                    <span class="w-[15%] text-center font-bold text-gray-800">${recent.quantity}</span>
+                    <span class="w-[15%] text-right font-bold text-gray-800">₱${recent.price}</span>
+                `;
+            } catch (err) {
+                console.error('Failed to load recent product:', err);
+                const recentContainer = document.getElementById('recentList');
+                if (recentContainer) recentContainer.innerHTML = '<div class="w-full text-center text-red-600">Unable to load recent product</div>';
+            }
+        }
+
+        function escapeHtml(str) {
+            return String(str || '').replace(/[&<>"']/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[s]));
+        }
+    </script>
+
+</body>
+</html>

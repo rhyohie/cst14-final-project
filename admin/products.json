@@ -1,0 +1,92 @@
+[
+  {
+    "id": 11,
+    "name": "yummy beef",
+    "category": "Food",
+    "price": 120,
+    "quantity": 20,
+    "image_url": null,
+    "created_at": "2026-02-28 15:16:44"
+  },
+  {
+    "id": 10,
+    "name": "Beef Jerky",
+    "category": "Treats",
+    "price": 200,
+    "quantity": 50,
+    "image_url": null,
+    "created_at": "2026-02-28 15:16:19"
+  },
+  {
+    "id": 9,
+    "name": "Toothbrush",
+    "category": "Accessories",
+    "price": 200,
+    "quantity": 36,
+    "image_url": null,
+    "created_at": "2026-02-20 03:47:20"
+  },
+  {
+    "id": 8,
+    "name": "Pet Scarf",
+    "category": "Accessories",
+    "price": 250,
+    "quantity": 47,
+    "image_url": null,
+    "created_at": "2026-02-20 03:45:27"
+  },
+  {
+    "id": 7,
+    "name": "Toy",
+    "category": "Accessories",
+    "price": 80,
+    "quantity": 76,
+    "image_url": null,
+    "created_at": "2026-02-20 03:32:15"
+  },
+  {
+    "id": 2,
+    "name": "Food Bowl",
+    "category": "Accessories",
+    "price": 599,
+    "quantity": 13,
+    "image_url": null,
+    "created_at": "2026-02-19 13:25:10"
+  },
+  {
+    "id": 3,
+    "name": "Toy Ball",
+    "category": "Accessories",
+    "price": 100,
+    "quantity": 28,
+    "image_url": null,
+    "created_at": "2026-02-19 13:25:10"
+  },
+  {
+    "id": 4,
+    "name": "Puppy Kibble",
+    "category": "Food",
+    "price": 750,
+    "quantity": 94,
+    "image_url": null,
+    "created_at": "2026-02-19 13:25:10"
+  },
+  {
+    "id": 5,
+    "name": "Dog Treats",
+    "category": "Treats",
+    "price": 150,
+    "quantity": 39,
+    "image_url": null,
+    "created_at": "2026-02-19 13:25:10"
+  },
+  {
+    "id": 6,
+    "name": "Leash",
+    "category": "Accessories",
+    "price": 299,
+    "quantity": 1,
+    "image_url": null,
+    "created_at": "2026-02-19 13:25:10"
+  }
+]

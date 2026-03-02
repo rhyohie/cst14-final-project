@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Customers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; margin: 10px 0; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #999; }
+    </style>
+</head>
+<body class="bg-[#659492] h-screen flex flex-col overflow-hidden text-[#333]">
+
+    <header class="h-[80px] flex justify-between items-center px-10 text-white shrink-0">
+        <div class="flex items-center gap-3 font-bold text-lg">
+            <img src="../icons/logo.svg" alt="Logo" class="w-8 h-8">
+            <span>Pet Stay-tion</span>
+        </div>
+        
+        <div class="flex items-center gap-3 font-medium">
+            <img src="../icons/Pfp.jpg" alt="Admin" class="w-9 h-9 rounded-full object-cover bg-gray-300">
+            <span>Admin</span>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        
+        <aside class="w-[280px] flex flex-col justify-between p-6 pb-10 shrink-0">
+            <nav class="flex flex-col gap-4 mt-4">
+                
+                <a href="overview.html" class="flex items-center gap-4 px-6 py-3 font-bold text-white hover:bg-white/10 rounded-full transition-colors">
+                    <img src="overviewA.svg" alt="Overview" class="w-6 h-6 brightness-0 invert">
+                    <span>Overview</span>
+                </a>
+
+                <a href="inventory.html" class="flex items-center gap-4 px-6 py-3 font-bold text-white hover:bg-white/10 rounded-full transition-colors">
+                    <img src="inventoryI.svg" alt="Inventory" class="w-6 h-6 brightness-0 invert">
+                    <span>Inventory</span>
+                </a>
+
+                <a href="sales.html" class="flex items-center gap-4 px-6 py-3 font-bold text-white hover:bg-white/10 rounded-full transition-colors">
+                    <img src="salesI.svg" alt="Sales" class="w-6 h-6 brightness-0 invert">
+                    <span>Sales</span>
+                </a>
+
+                <a href="#" class="flex items-center gap-4 px-6 py-3 bg-white text-[#659492] rounded-full font-bold shadow-md transition-transform hover:scale-105">
+                    <img src="usersI.svg" alt="Customers" class="w-6 h-6">
+                    <span>Customers</span>
+                </a>
+
+                <a href="../Homepage/homepage.html" class="mt-4">
+                    <button class="w-full py-3 bg-white text-[#659492] font-bold rounded-full shadow-md hover:bg-gray-100 transition flex items-center justify-center gap-2">
+                        <span>Go to Shop</span>
+                    </button>                    
+                </a>                
+            </nav>
+
+            <div class="flex flex-col">
+                <a href="../login/login.html">
+                    <button class="w-full py-3 bg-white text-[#333] font-bold rounded-full shadow-md hover:bg-gray-100 transition">
+                        Log Out
+                    </button>
+                </a>
+            </div>
+        </aside>
+
+        <main class="flex-1 bg-white rounded-tl-[50px] p-4 md:p-12 overflow-hidden relative flex justify-center items-center">
+            
+            <div class="bg-[#F3F4F6] w-full max-w-6xl h-[85vh] rounded-[30px] shadow-inner relative flex flex-col overflow-hidden">
+                
+                <div class="flex-1 overflow-y-auto custom-scrollbar p-8">
+                    
+                    <h1 class="text-3xl font-extrabold text-gray-800 mb-6">Welcome Admin!</h1>
+
+                    <div class="mb-8">
+                        <div class="relative w-full">
+                            <input type="text" placeholder="Search Customers..." class="w-full pl-6 pr-12 py-3 rounded-full border border-gray-300 focus:outline-none focus:border-[#659492] text-gray-600 shadow-sm bg-gray-50">
+                            <img src="../Homepage/searchbar.svg" alt="Search" class="absolute right-4 top-1/2 -translate-y-1/2 w-6 h-6 opacity-50">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+                        <div class="bg-white p-6 rounded-[20px] shadow-sm flex flex-col items-center justify-center text-center">
+                            <h3 class="text-gray-800 font-bold text-lg mb-1">Total Customers</h3>
+                            <div id="totalCustomers" class="text-4xl font-extrabold text-gray-900 mb-1">0</div>
+                            <p class="text-xs font-bold text-green-600 flex items-center gap-1">
+                                <span class="text-green-500 text-lg">▲</span> updated live
+                            </p>
+                        </div>
+                        <div class="bg-white p-6 rounded-[20px] shadow-sm flex flex-col items-center justify-center text-center">
+                            <h3 class="text-gray-800 font-bold text-lg mb-1">New this Month</h3>
+                            <div id="newThisMonth" class="text-4xl font-extrabold text-gray-900 mb-1">0</div>
+                            <p class="text-xs font-bold text-green-600 flex items-center gap-1">
+                                <span class="text-green-500 text-lg">▲</span> since 30 days
+                            </p>
+                        </div>
+                        <div class="bg-white p-6 rounded-[20px] shadow-sm flex flex-col items-center justify-center text-center">
+                            <h3 class="text-gray-800 font-bold text-lg mb-1">Returning Rate</h3>
+                            <div id="returningRate" class="text-4xl font-extrabold text-gray-900 mb-1">0%</div>
+                            <p class="text-xs font-bold text-green-600 flex items-center gap-1">
+                                <span class="text-green-500 text-lg">▲</span> calculated
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-[20px] shadow-sm flex flex-col gap-4">
+                        
+                        <div class="flex justify-between items-center text-sm font-bold text-gray-800 mb-2 px-8">
+                            <span class="w-[15%] text-center">ID</span>
+                            <span class="w-[30%] text-left pl-4">Customer</span>
+                            <span class="w-[20%] text-center">Total Orders</span>
+                            <span class="w-[20%] text-center">Total Spent</span>
+                            <span class="w-[15%]"></span> </div>
+
+                        <div id="usersList" class="flex flex-col gap-3">
+                            <div class="text-center text-gray-500 py-8" id="usersLoading">Loading customers...</div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const currentUserId = localStorage.getItem('userId');
+        const currentUserRole = localStorage.getItem('role');
+
+        function checkAuth() {
+            if (!currentUserId || currentUserRole !== 'admin') {
+                alert('Access denied. Admin only.');
+                window.location.href = '/';
+                return false;
+            }
+            return true;
+        }
+
+        async function loadUsersPage(){
+            if (!checkAuth()) return;
+
+            try{
+                const res = await fetch('/api/admin/users', {
+                    headers: {
+                        'x-user-id': currentUserId,
+                        'x-admin-role': currentUserRole
+                    }
+                });
+                if(!res.ok) throw new Error('Failed to load users');
+                const users = await res.json();
+
+                document.getElementById('totalCustomers').textContent = users.length;
+
+                const now = new Date();
+                const days30 = 30*24*60*60*1000;
+                const newCount = users.filter(u => {
+                    const d = new Date(u.created_at);
+                    return (now - d) <= days30;
+                }).length;
+                document.getElementById('newThisMonth').textContent = newCount;
+                document.getElementById('returningRate').textContent = '—';
+
+                const list = document.getElementById('usersList');
+                list.innerHTML = '';
+                if(users.length === 0){
+                    list.innerHTML = '<div class="text-center text-gray-500 py-8">No customers found.</div>';
+                    return;
+                }
+
+                window.allUsers = users;
+
+                for(const u of users){
+                    let orderCount = '-';
+                    let totalSpent = '-';
+
+                    try {
+                        const orderCountRes = await fetch(`/api/admin/users/${u.id}/orders/count`, {
+                            headers: {
+                                'x-user-id': currentUserId,
+                                'x-admin-role': currentUserRole
+                            }
+                        });
+                        const countData = await orderCountRes.json();
+                        orderCount = countData.count || 0;
+
+                        const totalRes = await fetch(`/api/admin/users/${u.id}/orders/total`, {
+                            headers: {
+                                'x-user-id': currentUserId,
+                                'x-admin-role': currentUserRole
+                            }
+                        });
+                        const totalData = await totalRes.json();
+                        totalSpent = '₱' + (totalData.total || 0).toFixed(2);
+                    } catch (err) {
+                        console.error('Error fetching order data for user', u.id, err);
+                    }
+
+                    renderUserRow(u, orderCount, totalSpent, list);
+                }
+            }catch(err){
+                console.error(err);
+                document.getElementById('usersList').innerHTML = '<div class="text-center text-red-500 py-8">Error loading customers</div>';
+            }
+        }
+
+        function renderUserRow(u, orderCount, totalSpent, list){
+            const row = document.createElement('div');
+            row.className = 'border border-gray-800 rounded-full px-8 py-3 flex items-center justify-between hover:bg-gray-50 transition text-sm md:text-base';
+
+            const idSpan = document.createElement('span');
+            idSpan.className = 'w-[15%] text-center text-gray-500 font-medium';
+            idSpan.textContent = '#' + u.id;
+
+            const userDiv = document.createElement('div');
+                    userDiv.className = 'w-[30%] flex items-center gap-3';
+                    const img = document.createElement('img');
+                    img.src = '../icons/Pfp.jpg';
+                    img.alt = 'User';
+                    img.className = 'w-10 h-10 rounded-full object-cover border border-gray-200';
+                    const userInfo = document.createElement('div');
+                    const name = document.createElement('div');
+                    name.className = 'font-medium text-gray-700';
+                    name.textContent = u.username || '(no name)';
+                    const email = document.createElement('div');
+                    email.className = 'text-xs text-gray-500';
+                    email.textContent = u.email || '';
+                    userInfo.appendChild(name);
+                    userInfo.appendChild(email);
+                    userDiv.appendChild(img);
+                    userDiv.appendChild(userInfo);
+
+                    const ordersSpan = document.createElement('span');
+                    ordersSpan.className = 'w-[20%] text-center font-medium text-gray-600';
+                    ordersSpan.textContent = orderCount;
+
+                    const spentSpan = document.createElement('span');
+                    spentSpan.className = 'w-[20%] text-center font-bold text-gray-800';
+                    spentSpan.textContent = totalSpent;
+
+                    const actions = document.createElement('div');
+                    actions.className = 'w-[15%] flex justify-end pr-4 items-center gap-2';
+
+                    const viewBtn = document.createElement('button');
+                    viewBtn.className = 'hover:opacity-70 transition';
+                    viewBtn.title = 'View Details';
+                    viewBtn.onclick = () => viewUser(u.id);
+                    const eye = document.createElement('img');
+                    eye.src = '../icons/Eye.svg';
+                    eye.className = 'w-8 h-8';
+                    viewBtn.appendChild(eye);
+                    actions.appendChild(viewBtn);
+
+                    const editBtn = document.createElement('button');
+                    editBtn.className = 'hover:opacity-70 transition';
+                    editBtn.title = 'Edit User';
+                    editBtn.onclick = () => openEditModal(u.id);
+                    const editIcon = document.createElement('img');
+                    editIcon.src = '../icons/edit.svg';
+                    editIcon.className = 'w-8 h-8';
+                    editBtn.appendChild(editIcon);
+                    actions.appendChild(editBtn);
+
+                    const delBtn = document.createElement('button');
+                    delBtn.className = 'hover:opacity-70 transition';
+                    delBtn.title = 'Delete User';
+                    delBtn.onclick = () => deleteUser(u.id);
+                    const delIcon = document.createElement('img');
+                    delIcon.src = '../icons/Trash.svg';
+                    delIcon.className = 'w-8 h-8';
+                    delBtn.appendChild(delIcon);
+                    actions.appendChild(delBtn);
+
+                    row.appendChild(idSpan);
+                    row.appendChild(userDiv);
+                    row.appendChild(ordersSpan);
+                    row.appendChild(spentSpan);
+                    row.appendChild(actions);
+
+                    list.appendChild(row);
+        }
+
+        const editModalHtml = `
+        <div id="editUserModal" class="fixed inset-0 z-50 hidden justify-center items-center bg-black/50 backdrop-blur-sm">
+            <div class="bg-white w-full max-w-xl rounded-[20px] shadow-2xl p-6 relative m-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold text-gray-800">Edit User</h2>
+                    <button id="closeEditModalBtn" class="text-gray-500 hover:text-gray-700 text-2xl leading-none">&times;</button>
+                </div>
+                <form id="editUserForm" class="flex flex-col gap-4">
+                    <input type="hidden" id="editUserId">
+                    <div>
+                        <label class="text-sm font-bold text-gray-700">Username</label>
+                        <input id="editUsername" class="w-full px-4 py-2 border border-gray-300 rounded-full" required>
+                    </div>
+                    <div>
+                        <label class="text-sm font-bold text-gray-700">Email</label>
+                        <input id="editEmail" type="email" class="w-full px-4 py-2 border border-gray-300 rounded-full" required>
+                    </div>
+                    <div>
+                        <label class="text-sm font-bold text-gray-700">Role</label>
+                        <select id="editRole" class="w-full px-4 py-2 border border-gray-300 rounded-full">
+                            <option value="customer">Customer</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <input id="editActive" type="checkbox" class="w-4 h-4">
+                        <label class="text-sm font-medium text-gray-700">Active</label>
+                    </div>
+                </form>
+                <div class="flex justify-end gap-3 mt-4">
+                    <button id="cancelEditBtn" class="px-4 py-2 bg-gray-100 rounded-full">Cancel</button>
+                    <button id="saveEditBtn" class="px-4 py-2 bg-[#659492] text-white rounded-full">Save</button>
+                </div>
+            </div>
+        </div>`;
+
+        document.body.insertAdjacentHTML('beforeend', editModalHtml);
+
+        const editModal = document.getElementById('editUserModal');
+        const closeEditModalBtn = document.getElementById('closeEditModalBtn');
+        const cancelEditBtn = document.getElementById('cancelEditBtn');
+        const saveEditBtn = document.getElementById('saveEditBtn');
+
+        function openEditModal(userId) {
+            const user = (window.allUsers || []).find(u => u.id === userId);
+            if (!user) return alert('User not found');
+            document.getElementById('editUserId').value = user.id;
+            document.getElementById('editUsername').value = user.username || '';
+            document.getElementById('editEmail').value = user.email || '';
+            document.getElementById('editRole').value = user.role || 'customer';
+            document.getElementById('editActive').checked = user.active !== false;
+            editModal.classList.remove('hidden');
+            editModal.classList.add('flex');
+        }
+
+        function closeEditModal() {
+            editModal.classList.add('hidden');
+            editModal.classList.remove('flex');
+        }
+
+        closeEditModalBtn.addEventListener('click', closeEditModal);
+        cancelEditBtn.addEventListener('click', (e) => { e.preventDefault(); closeEditModal(); });
+
+        saveEditBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('editUserId').value;
+            const payload = {
+                username: document.getElementById('editUsername').value,
+                email: document.getElementById('editEmail').value,
+                role: document.getElementById('editRole').value,
+                active: document.getElementById('editActive').checked
+            };
+            try {
+                const res = await fetch(`/api/admin/users/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!res.ok) {
+                    const err = await res.json().catch(()=>({}));
+                    throw new Error(err.error || 'Failed to update user');
+                }
+                closeEditModal();
+                await loadUsersPage();
+            } catch (err) {
+                console.error(err);
+                alert(err.message || 'Update failed');
+            }
+        });
+
+        async function deleteUser(userId) {
+            if (!confirm('Delete this user?')) return;
+            try {
+                const res = await fetch(`/api/admin/users/${userId}`, { method: 'DELETE' });
+                if (!res.ok) throw new Error('Failed to delete user');
+                await loadUsersPage();
+            } catch (err) {
+                console.error(err);
+                alert('Delete failed');
+            }
+        }
+
+        function viewUser(id){
+            window.location.href = '/user/profile.html?id=' + id;
+        }
+
+        window.addEventListener('load', loadUsersPage);
+    </script>
+
+</body>
+</html>

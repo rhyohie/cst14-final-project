@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Care Homepage</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-[Segoe UI]">
+
+    <header class="bg-[#659492] h-[100px] w-full flex items-center justify-between px-10 relative z-50 shadow-sm">
+        <div class="flex items-center gap-4 shrink-0">
+            <img src="../icons/Octagon.svg" alt="Logo" class="w-10 h-10">
+            <span class="text-white font-bold text-xl tracking-wide">Sample Logo Here</span>
+        </div>
+
+        <div class="flex-1 max-w-3xl mx-12">
+            <form action="search_results.php" method="GET" class="relative w-full">
+                <input type="text" name="query" placeholder="Search products..." class="w-full h-12 rounded-full pl-8 pr-14 outline-none text-gray-700 shadow-inner focus:ring-2 focus:ring-teal-700/50 transition">
+                <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 p-2 hover:bg-gray-100 rounded-full transition opacity-60 hover:opacity-100">
+                    <img src="../Homepage/searchbar.svg" alt="Search" class="w-6 h-6">
+                </button>
+            </form>
+        </div>
+
+        <div class="flex items-center gap-8 shrink-0">
+            <a href="../user/cart.html" class="hover:opacity-80 transition"><img src="../icons/CartA.svg" alt="Cart" class="w-8 h-8 brightness-0 invert"></a>
+            <a href="../user/profile.html" class="hover:opacity-80 transition"><img src="../icons/UserA.svg" alt="Profile" class="w-8 h-8 brightness-0 invert"></a>
+            <a href="../login/login.html" class="text-white font-bold text-lg hover:underline decoration-2 underline-offset-4 transition">Sign Out</a>
+        </div>
+    </header>
+
+    <div class="absolute top-[100px] left-0 w-full z-40 pointer-events-none">
+        <input type="checkbox" id="category-toggle" class="peer hidden pointer-events-auto">
+        <div class="bg-white w-full grid grid-rows-[0fr] transition-all duration-500 ease-in-out peer-checked:grid-rows-[1fr] shadow-xl pointer-events-auto">
+            <div class="overflow-hidden">
+                <div class="h-[80px] w-full max-w-5xl mx-auto flex items-center justify-between font-bold text-xl text-gray-700 border-t border-gray-100 px-10">
+                    <a href="#" class="hover:text-[#659492] hover:scale-110 transition transform">Dog</a>
+                    <a href="#" class="hover:text-[#659492] hover:scale-110 transition transform">Cat</a>
+                    <a href="#" class="hover:text-[#659492] hover:scale-110 transition transform">Small Pets</a>
+                    <a href="#" class="hover:text-[#659492] hover:scale-110 transition transform">Fish</a>
+                </div>
+            </div>
+        </div>
+        <div class="w-full flex justify-center pointer-events-auto">
+            <label for="category-toggle" class="cursor-pointer bg-white px-10 pt-1 pb-2 rounded-b-[20px] shadow-md flex items-center justify-center hover:bg-gray-50 transition -mt-[1px]">
+                <img src="../Homepage/dropdown.svg" alt="Dropdown" class="w-8 h-8">
+            </label>
+        </div>
+    </div>
+
+    <div class="relative w-full h-[600px] bg-gray-200 overflow-hidden z-0">
+        <img src="banner.svg" alt="Pet Care Banner" class="absolute inset-0 w-full h-full object-cover object-bottom">
+        <div class="relative z-10 flex flex-col items-center justify-start h-full pt-40 text-center">
+            <h1 class="text-7xl font-extrabold text-white tracking-wide drop-shadow-md mb-8">Pet care in one place</h1>
+            <a href="#products" class="pointer-events-auto">
+                <button class="px-12 py-3 bg-white text-[#333] font-bold text-xl rounded-full shadow-lg hover:bg-gray-100 transition transform hover:scale-105">
+                    Shop Now
+                </button>
+            </a>
+        </div>
+    </div>
+
+    <div id="products" class="w-full pt-16 pb-3 px-10"></div>
+
+    <div class="w-[95%] mx-auto flex flex-col gap-24 pb-32">
+
+        <div>
+            <h2 class="text-5xl font-bold text-gray-800 mb-8 tracking-tight">Accessories</h2>
+            
+            <div class="flex items-center gap-6 relative">
+                <button onclick="scrollSlider('accessories-slider', 'left')" class="shrink-0 p-3 bg-[#659492] hover:bg-[#537a78] rounded-full shadow-md transition group z-10">
+                    <img src="../Homepage/pointer.svg" alt="Prev" class="w-6 h-6 brightness-0 invert">
+                </button>
+
+                <div id="accessories-slider" class="flex-1 flex gap-6 overflow-x-hidden scroll-smooth pb-4">
+                    <div class="min-w-[200px] md:min-w-[300px] flex-1 bg-white p-4 md:p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col">
+                        <div class="h-48 md:h-64 bg-gray-200 rounded-lg overflow-hidden mb-4 md:mb-6 relative"></div>
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-900 leading-tight mb-2">Item 1</h3>
+                        <p class="text-gray-500 font-medium mb-4 md:mb-6 text-base md:text-lg">Price Kineme</p>
+                        <div class="mt-auto flex gap-1"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"></div>
+                    </div>
+                    <div class="min-w-[200px] md:min-w-[300px] flex-1 bg-white p-4 md:p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col"><div class="h-48 md:h-64 bg-gray-200 rounded-lg overflow-hidden mb-4 md:mb-6 relative"></div><h3 class="text-xl md:text-2xl font-bold text-gray-900 leading-tight mb-2">Item 2</h3><p class="text-gray-500 font-medium mb-4 md:mb-6 text-base md:text-lg">Price Kineme</p><div class="mt-auto flex gap-1"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"></div></div>
+                    <div class="min-w-[200px] md:min-w-[300px] flex-1 bg-white p-4 md:p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col"><div class="h-48 md:h-64 bg-gray-200 rounded-lg overflow-hidden mb-4 md:mb-6 relative"></div><h3 class="text-xl md:text-2xl font-bold text-gray-900 leading-tight mb-2">Item 3</h3><p class="text-gray-500 font-medium mb-4 md:mb-6 text-base md:text-lg">Price Kineme</p><div class="mt-auto flex gap-1"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"></div></div>
+                    <div class="min-w-[200px] md:min-w-[300px] flex-1 bg-white p-4 md:p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col"><div class="h-48 md:h-64 bg-gray-200 rounded-lg overflow-hidden mb-4 md:mb-6 relative"></div><h3 class="text-xl md:text-2xl font-bold text-gray-900 leading-tight mb-2">Item 4</h3><p class="text-gray-500 font-medium mb-4 md:mb-6 text-base md:text-lg">Price Kineme</p><div class="mt-auto flex gap-1"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"></div></div>
+                    <div class="min-w-[200px] md:min-w-[300px] flex-1 bg-white p-4 md:p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col"><div class="h-48 md:h-64 bg-gray-200 rounded-lg overflow-hidden mb-4 md:mb-6 relative"></div><h3 class="text-xl md:text-2xl font-bold text-gray-900 leading-tight mb-2">Item 5</h3><p class="text-gray-500 font-medium mb-4 md:mb-6 text-base md:text-lg">Price Kineme</p><div class="mt-auto flex gap-1"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"></div></div>
+                    <div class="min-w-[200px] md:min-w-[300px] flex-1 bg-white p-4 md:p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col"><div class="h-48 md:h-64 bg-gray-200 rounded-lg overflow-hidden mb-4 md:mb-6 relative"></div><h3 class="text-xl md:text-2xl font-bold text-gray-900 leading-tight mb-2">Item 6</h3><p class="text-gray-500 font-medium mb-4 md:mb-6 text-base md:text-lg">Price Kineme</p><div class="mt-auto flex gap-1"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"></div></div>
+                </div>
+
+                <button onclick="scrollSlider('accessories-slider', 'right')" class="shrink-0 p-3 bg-[#659492] hover:bg-[#537a78] rounded-full shadow-md transition group z-10">
+                    <img src="../Homepage/pointer.svg" alt="Next" class="w-6 h-6 brightness-0 invert rotate-180">
+                </button>
+            </div>
+        </div>
+
+        <div>
+            <h2 class="text-5xl font-bold text-gray-800 mb-8 tracking-tight">Food</h2>
+            
+            <div class="flex items-center gap-6 relative">
+                <button onclick="scrollSlider('food-slider', 'left')" class="shrink-0 p-3 bg-[#659492] hover:bg-[#537a78] rounded-full shadow-md transition group z-10">
+                    <img src="../Homepage/pointer.svg" alt="Prev" class="w-6 h-6 brightness-0 invert">
+                </button>
+
+                <div id="food-slider" class="flex-1 flex gap-6 overflow-x-hidden scroll-smooth pb-4">
+                    <div class="min-w-[200px] md:min-w-[300px] flex-1 bg-white p-4 md:p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col"><div class="h-48 md:h-64 bg-gray-200 rounded-lg overflow-hidden mb-4 md:mb-6 relative"></div><h3 class="text-xl md:text-2xl font-bold text-gray-900 leading-tight mb-2">Food 1</h3><p class="text-gray-500 font-medium mb-4 md:mb-6 text-base md:text-lg">Price Kineme</p><div class="mt-auto flex gap-1"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"></div></div>
+                    <div class="min-w-[200px] md:min-w-[300px] flex-1 bg-white p-4 md:p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col"><div class="h-48 md:h-64 bg-gray-200 rounded-lg overflow-hidden mb-4 md:mb-6 relative"></div><h3 class="text-xl md:text-2xl font-bold text-gray-900 leading-tight mb-2">Food 2</h3><p class="text-gray-500 font-medium mb-4 md:mb-6 text-base md:text-lg">Price Kineme</p><div class="mt-auto flex gap-1"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"></div></div>
+                    <div class="min-w-[200px] md:min-w-[300px] flex-1 bg-white p-4 md:p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col"><div class="h-48 md:h-64 bg-gray-200 rounded-lg overflow-hidden mb-4 md:mb-6 relative"></div><h3 class="text-xl md:text-2xl font-bold text-gray-900 leading-tight mb-2">Food 3</h3><p class="text-gray-500 font-medium mb-4 md:mb-6 text-base md:text-lg">Price Kineme</p><div class="mt-auto flex gap-1"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"></div></div>
+                    <div class="min-w-[200px] md:min-w-[300px] flex-1 bg-white p-4 md:p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col"><div class="h-48 md:h-64 bg-gray-200 rounded-lg overflow-hidden mb-4 md:mb-6 relative"></div><h3 class="text-xl md:text-2xl font-bold text-gray-900 leading-tight mb-2">Food 4</h3><p class="text-gray-500 font-medium mb-4 md:mb-6 text-base md:text-lg">Price Kineme</p><div class="mt-auto flex gap-1"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"></div></div>
+                    <div class="min-w-[200px] md:min-w-[300px] flex-1 bg-white p-4 md:p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col"><div class="h-48 md:h-64 bg-gray-200 rounded-lg overflow-hidden mb-4 md:mb-6 relative"></div><h3 class="text-xl md:text-2xl font-bold text-gray-900 leading-tight mb-2">Food 5</h3><p class="text-gray-500 font-medium mb-4 md:mb-6 text-base md:text-lg">Price Kineme</p><div class="mt-auto flex gap-1"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"></div></div>
+                    <div class="min-w-[200px] md:min-w-[300px] flex-1 bg-white p-4 md:p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col"><div class="h-48 md:h-64 bg-gray-200 rounded-lg overflow-hidden mb-4 md:mb-6 relative"></div><h3 class="text-xl md:text-2xl font-bold text-gray-900 leading-tight mb-2">Food 6</h3><p class="text-gray-500 font-medium mb-4 md:mb-6 text-base md:text-lg">Price Kineme</p><div class="mt-auto flex gap-1"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"></div></div>
+                </div>
+
+                <button onclick="scrollSlider('food-slider', 'right')" class="shrink-0 p-3 bg-[#659492] hover:bg-[#537a78] rounded-full shadow-md transition group z-10">
+                    <img src="../Homepage/pointer.svg" alt="Next" class="w-6 h-6 brightness-0 invert rotate-180">
+                </button>
+            </div>
+        </div>
+
+        <div>
+            <h2 class="text-5xl font-bold text-gray-800 mb-8 tracking-tight">Treats</h2>
+            
+            <div class="flex items-center gap-6 relative">
+                <button onclick="scrollSlider('treats-slider', 'left')" class="shrink-0 p-3 bg-[#659492] hover:bg-[#537a78] rounded-full shadow-md transition group z-10">
+                    <img src="../Homepage/pointer.svg" alt="Prev" class="w-6 h-6 brightness-0 invert">
+                </button>
+
+                <div id="treats-slider" class="flex-1 flex gap-6 overflow-x-hidden scroll-smooth pb-4">
+                    <div class="min-w-[200px] md:min-w-[300px] flex-1 bg-white p-4 md:p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col"><div class="h-48 md:h-64 bg-gray-200 rounded-lg overflow-hidden mb-4 md:mb-6 relative"></div><h3 class="text-xl md:text-2xl font-bold text-gray-900 leading-tight mb-2">Treats 1</h3><p class="text-gray-500 font-medium mb-4 md:mb-6 text-base md:text-lg">Price Kineme</p><div class="mt-auto flex gap-1"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"></div></div>
+                     <div class="min-w-[200px] md:min-w-[300px] flex-1 bg-white p-4 md:p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col"><div class="h-48 md:h-64 bg-gray-200 rounded-lg overflow-hidden mb-4 md:mb-6 relative"></div><h3 class="text-xl md:text-2xl font-bold text-gray-900 leading-tight mb-2">Treats 2</h3><p class="text-gray-500 font-medium mb-4 md:mb-6 text-base md:text-lg">Price Kineme</p><div class="mt-auto flex gap-1"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"></div></div>
+                     <div class="min-w-[200px] md:min-w-[300px] flex-1 bg-white p-4 md:p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col"><div class="h-48 md:h-64 bg-gray-200 rounded-lg overflow-hidden mb-4 md:mb-6 relative"></div><h3 class="text-xl md:text-2xl font-bold text-gray-900 leading-tight mb-2">Treats 3</h3><p class="text-gray-500 font-medium mb-4 md:mb-6 text-base md:text-lg">Price Kineme</p><div class="mt-auto flex gap-1"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"></div></div>
+                     <div class="min-w-[200px] md:min-w-[300px] flex-1 bg-white p-4 md:p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col"><div class="h-48 md:h-64 bg-gray-200 rounded-lg overflow-hidden mb-4 md:mb-6 relative"></div><h3 class="text-xl md:text-2xl font-bold text-gray-900 leading-tight mb-2">Treats 4</h3><p class="text-gray-500 font-medium mb-4 md:mb-6 text-base md:text-lg">Price Kineme</p><div class="mt-auto flex gap-1"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"></div></div>
+                     <div class="min-w-[200px] md:min-w-[300px] flex-1 bg-white p-4 md:p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col"><div class="h-48 md:h-64 bg-gray-200 rounded-lg overflow-hidden mb-4 md:mb-6 relative"></div><h3 class="text-xl md:text-2xl font-bold text-gray-900 leading-tight mb-2">Treats 5</h3><p class="text-gray-500 font-medium mb-4 md:mb-6 text-base md:text-lg">Price Kineme</p><div class="mt-auto flex gap-1"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"></div></div>
+                     <div class="min-w-[200px] md:min-w-[300px] flex-1 bg-white p-4 md:p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col"><div class="h-48 md:h-64 bg-gray-200 rounded-lg overflow-hidden mb-4 md:mb-6 relative"></div><h3 class="text-xl md:text-2xl font-bold text-gray-900 leading-tight mb-2">Treats 6</h3><p class="text-gray-500 font-medium mb-4 md:mb-6 text-base md:text-lg">Price Kineme</p><div class="mt-auto flex gap-1"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"><img src="../Homepage/star.svg" class="w-5 h-5 md:w-6 md:h-6"></div></div>
+                </div>
+
+                <button onclick="scrollSlider('treats-slider', 'right')" class="shrink-0 p-3 bg-[#659492] hover:bg-[#537a78] rounded-full shadow-md transition group z-10">
+                    <img src="../Homepage/pointer.svg" alt="Next" class="w-6 h-6 brightness-0 invert rotate-180">
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        async function loadProducts() {
+                try {
+                const res = await fetch('/api/products');
+                if (!res.ok) throw new Error('Failed to fetch products');
+                const products = await res.json();
+
+                window.availableProducts = products;
+
+                const accessoriesSlider = document.getElementById('accessories-slider');
+                const foodSlider = document.getElementById('food-slider');
+                const treatsSlider = document.getElementById('treats-slider');
+
+                if (accessoriesSlider) accessoriesSlider.innerHTML = '';
+                if (foodSlider) foodSlider.innerHTML = '';
+                if (treatsSlider) treatsSlider.innerHTML = '';
+
+                const available = products.filter(p => p.quantity > 0);
+
+                const categories = {
+                    'Accessories': accessoriesSlider,
+                    'Food': foodSlider,
+                    'Treats': treatsSlider
+                };
+
+                function makeCard(p) {
+                    return `
+                        <div class="min-w-[200px] md:min-w-[300px] flex-1 bg-white p-4 md:p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col">
+                            <div class="h-48 md:h-64 bg-gray-200 rounded-lg overflow-hidden mb-4 md:mb-6 relative">${p.image_url ? `<img src="${p.image_url}" class="w-full h-full object-cover">` : '<div class="w-full h-full flex items-center justify-center text-gray-500">No image</div>'}</div>
+                            <h3 class="text-xl md:text-2xl font-bold text-gray-900 leading-tight mb-2">${escapeHtml(p.name)}</h3>
+                            <p class="text-gray-500 font-medium mb-4 md:mb-6 text-base md:text-lg">₱${p.price}</p>
+                            <div class="mt-auto flex items-center justify-between">
+                                <span class="text-sm text-gray-500">Qty: ${p.quantity}</span>
+                                <button onclick="addToCart(${p.id})" class="px-3 py-1 bg-[#659492] text-white rounded">Add</button>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                for (const p of available) {
+                    const container = categories[p.category];
+                    if (!container) continue;
+                    container.insertAdjacentHTML('beforeend', makeCard(p));
+                }
+
+                for (const [name, container] of Object.entries(categories)) {
+                    if (!container) continue;
+                    if (container.children.length === 0) {
+                        container.innerHTML = `<div class="text-gray-600 p-4">No available items in ${escapeHtml(name)}.</div>`;
+                    }
+                }
+
+            } catch (err) {
+                console.error(err);
+                const accessoriesSlider = document.getElementById('accessories-slider');
+                const foodSlider = document.getElementById('food-slider');
+                const treatsSlider = document.getElementById('treats-slider');
+                if (accessoriesSlider) accessoriesSlider.innerHTML = '<p class="text-red-600">Unable to load products.</p>';
+                if (foodSlider) foodSlider.innerHTML = '<p class="text-red-600">Unable to load products.</p>';
+                if (treatsSlider) treatsSlider.innerHTML = '<p class="text-red-600">Unable to load products.</p>';
+            }
+        }
+
+        function escapeHtml(str) {
+            return String(str).replace(/[&<>"']/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[s]));
+        }
+
+        function scrollSlider(elementId, direction) {
+            const slider = document.getElementById(elementId);
+            const scrollAmount = 320;
+
+            if (direction === 'left') {
+                slider.scrollLeft -= scrollAmount;
+            } else {
+                slider.scrollLeft += scrollAmount;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadProducts);
+
+        async function addToCart(productId) {
+            const userId = localStorage.getItem('userId');
+            if (!userId) {
+                if (confirm('You must be logged in to add to cart. Go to login?')) window.location.href = '/login/login.html';
+                return;
+            }
+
+            const prod = (window.availableProducts || []).find(p => p.id === productId);
+            if (!prod) return alert('Product not found');
+
+            try {
+                const res = await fetch('/api/cart', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ product_id: prod.id, product_name: prod.name, quantity: 1, price: prod.price })
+                });
+                if (!res.ok) throw new Error('Failed to add to cart');
+                alert('Added to cart');
+            } catch (err) {
+                console.error(err);
+                alert('Unable to add to cart');
+            }
+        }
+    </script>
+
+    <footer class="bg-[#659492] text-white text-lg py-16 pl-20">
+        <div class="flex flex-col gap-6">
+            <div class="flex items-center gap-4">
+                <img src="../Homepage/phone.svg" alt="Phone" class="w-6 h-6 brightness-0 invert">
+                <span class="font-medium text-lg">Contact us at (68) 0921 913 1230</span>
+            </div>
+            <a href="#" class="flex items-center gap-4 hover:opacity-80 transition w-fit">
+                <img src="../login/facebook.svg" alt="Facebook" class="w-6 h-6 brightness-0 invert">
+                <span class="font-medium text-lg">Like us on Facebook</span>
+            </a>
+            <a href="#" class="flex items-center gap-4 hover:opacity-80 transition w-fit">
+                <img src="../login/twitter.svg" alt="Twitter" class="w-6 h-6 brightness-0 invert">
+                <span class="font-medium text-lg">Follow us on Twitter</span>
+            </a>
+            <a href="#" class="flex items-center gap-4 hover:opacity-80 transition w-fit">
+                <img src="../Homepage/insta.svg" alt="Instagram" class="w-6 h-6 brightness-0 invert">
+                <span class="font-medium text-lg">Follow us on Instagram</span>
+            </a>
+        </div>
+    </footer>
+
+</body>
+</html>

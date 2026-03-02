@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    </style>
+</head>
+<body class="bg-[#659492] h-screen flex flex-col overflow-hidden text-[#333]">
+
+    <header class="h-[80px] flex justify-between items-center px-10 text-white shrink-0">
+        <div class="flex items-center gap-3 font-bold text-lg">
+            <img src="../icons/Octagon.svg" alt="Logo" class="w-8 h-8">
+            <span>Sample Logo Here</span>
+        </div>
+        
+        <div class="flex items-center gap-3 font-medium">
+            <img src="../icons/Pfp.jpg" alt="Profile" class="w-9 h-9 rounded-full object-cover bg-gray-300">
+            <span id="headerUsername">User</span>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        
+        <aside class="w-[280px] flex flex-col justify-between p-6 pb-10 shrink-0">
+            <nav class="flex flex-col gap-4 mt-4">
+                <a href="profile.html" class="flex items-center gap-4 px-6 py-3 font-bold text-white hover:bg-white/10 rounded-full transition-colors">
+                    <img src="../icons/UserA.svg" alt="Account" class="w-6 h-6">
+                    <span>My Account</span>
+                </a>
+                <a href="cart.html" class="flex items-center gap-4 px-6 py-3 font-bold text-white hover:bg-white/10 rounded-full transition-colors">
+                    <img src="../icons/CartI.svg" alt="Cart" class="w-6 h-6">
+                    <span>Cart</span>
+                </a>
+                
+                <a href="#" class="flex items-center gap-4 px-6 py-3 bg-white text-[#659492] rounded-full font-bold shadow-md transition-transform hover:scale-105">
+                    <img src="../icons/GiftI.svg" alt="Orders" class="w-6 h-6">
+                    <span>Orders</span>
+                </a>
+                
+                <a href="address.html" class="flex items-center gap-4 px-6 py-3 font-bold text-white hover:bg-white/10 rounded-full transition-colors">
+                    <img src="../icons/HomeA.svg" alt="Addresses" class="w-6 h-6">
+                    <span>Addresses</span>
+                </a>
+                
+                <a href="../Homepage/homepage.html">
+                    <button class="w-full py-3 bg-white text-[#333] font-bold rounded-full shadow-md hover:bg-gray-100 transition">
+                    <span>Back to Shop</span></button>                    
+                </a>                
+            </nav>
+            <div class="flex flex-col gap-80">
+                <a href="../login/login.html">
+                    <button class="w-full py-3 bg-white text-[#333] font-bold rounded-full shadow-md hover:bg-gray-100 transition">
+                        Log Out
+                    </button>
+                </a>
+            </div>
+        </aside>
+
+        <main class="flex-1 bg-white rounded-tl-[50px] p-4 md:p-10 overflow-hidden relative flex justify-center items-center">
+            
+            <div class="bg-white w-[95%] max-w-6xl rounded-[30px] shadow-[0px_10px_30px_rgba(0,0,0,0.1)] p-8 md:p-12 border border-gray-100 relative h-[85vh] flex flex-col">
+                
+                <h2 class="text-2xl font-bold text-gray-800 mb-8 uppercase tracking-wide shrink-0">My Orders</h2>
+                
+                <div class="flex-1 flex flex-col gap-5 overflow-y-auto pr-4 custom-scrollbar" id="ordersContainer">
+                    <div id="ordersLoading" class="text-center text-gray-500 py-8">Loading orders...</div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="orderDetailsModal" class="fixed inset-0 z-50 hidden justify-center items-center bg-black/50 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-2xl rounded-[30px] shadow-2xl p-8 relative m-4 max-h-[80vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Order Details</h2>
+                <button id="closeDetailsModalBtn" class="text-gray-500 hover:text-gray-700 text-2xl leading-none">&times;</button>
+            </div>
+            <div class="mb-6 pb-6 border-b border-gray-200">
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <p class="text-sm text-gray-600">Order ID</p>
+                        <p class="text-lg font-bold text-gray-800" id="modalOrderId">-</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">Order Date</p>
+                        <p class="text-lg font-bold text-gray-800" id="modalOrderDate">-</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">Status</p>
+                        <p class="text-lg font-bold" id="modalOrderStatus">-</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">Total Amount</p>
+                        <p class="text-lg font-bold text-gray-800" id="modalOrderTotal">-</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <button id="markDeliveredBtn" class="hidden bg-green-600 text-white px-4 py-2 rounded-full">Mark as Delivered</button>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold text-gray-800 mb-4">Items</h3>
+                <div id="modalOrderItems" class="space-y-3">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function loadOrders() {
+            const userId = localStorage.getItem('userId');
+            const container = document.getElementById('ordersContainer');
+            if (!userId) {
+                container.innerHTML = '<div class="text-center text-gray-500 py-8">Please log in to view orders.</div>';
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/orders/' + userId, { credentials: 'include' });
+                if (!res.ok) throw new Error('Failed to load orders');
+                const orders = await res.json();
+                renderOrders(orders || []);
+            } catch (err) {
+                console.error(err);
+                container.innerHTML = '<div class="text-center text-red-500 py-8">Unable to load orders.</div>';
+            }
+        }
+
+        function renderOrders(orders) {
+            const container = document.getElementById('ordersContainer');
+            if (!orders || orders.length === 0) {
+                container.innerHTML = '<div class="text-center text-gray-500 py-8">No orders yet.</div>';
+                return;
+            }
+
+            container.innerHTML = '';
+            for (const order of orders) {
+                const statusColor = getStatusColor(order.status);
+                const orderDate = new Date(order.order_date).toLocaleDateString();
+                const row = document.createElement('div');
+                row.className = 'border border-gray-400 rounded-[25px] p-5 flex items-center justify-between hover:shadow-md transition cursor-pointer shrink-0';
+                row.innerHTML = `
+                    <div class="flex items-center gap-6 w-1/3">
+                        <img src="../icons/Octagon.svg" alt="Product" class="w-12 h-12"> 
+                        <span class="font-medium text-lg text-gray-700">#${order.id} - ${escapeHtml(order.status)}</span>
+                    </div>
+                    <div class="flex items-center justify-between w-2/3 pl-10">
+                        <span class="text-gray-600 font-medium">${orderDate}</span>
+                        <span class="font-bold text-gray-800 text-lg">₱${order.total_amount || 0}</span>
+                        <span class="font-bold ${statusColor} w-24 text-center">${escapeHtml(order.status)}</span>
+                        <img src="../icons/arrow.svg" alt="Arrow" class="w-5 h-5 opacity-40">
+                    </div>
+                `;
+                row.addEventListener('click', () => openOrderDetailsModal(order.id));
+                container.appendChild(row);
+            }
+        }
+
+        function getStatusColor(status) {
+            if (status === 'pending') return 'text-gray-400';
+            if (status === 'shipped') return 'text-[#659492]';
+            if (status === 'delivered') return 'text-green-600';
+            return 'text-gray-600';
+        }
+
+        async function openOrderDetailsModal(orderId) {
+            const userId = localStorage.getItem('userId');
+            try {
+                const res = await fetch(`/api/orders/${userId}/items/${orderId}`, { credentials: 'include' });
+                if (!res.ok) throw new Error('Failed to fetch order details');
+                const data = await res.json();
+                const { order, items } = data;
+
+                document.getElementById('modalOrderId').textContent = '#' + order.id;
+                document.getElementById('modalOrderDate').textContent = new Date(order.order_date).toLocaleDateString();
+                document.getElementById('modalOrderStatus').textContent = escapeHtml(order.status);
+                document.getElementById('modalOrderStatus').className = 'text-lg font-bold ' + getStatusColor(order.status);
+                document.getElementById('modalOrderTotal').textContent = '₱' + (order.total_amount || 0);
+
+                const markBtn = document.getElementById('markDeliveredBtn');
+                if (order.status !== 'delivered') {
+                    markBtn.classList.remove('hidden');
+                    markBtn.disabled = false;
+                    markBtn.onclick = async () => {
+                        const confirmMsg = `Mark order #${order.id} as delivered?`;
+                        if (!confirm(confirmMsg)) return;
+                        try {
+                            const putRes = await fetch(`/api/orders/${order.id}/status`, {
+                                method: 'PUT',
+                                headers: { 'Content-Type': 'application/json' },
+                                credentials: 'include',
+                                body: JSON.stringify({ status: 'delivered' })
+                            });
+                            if (!putRes.ok) {
+                                const err = await putRes.json().catch(()=>({error:putRes.statusText}));
+                                throw new Error(err.error || 'Failed to update status');
+                            }
+                            const updated = await putRes.json();
+                            document.getElementById('modalOrderStatus').textContent = escapeHtml(updated.order.status);
+                            document.getElementById('modalOrderStatus').className = 'text-lg font-bold ' + getStatusColor(updated.order.status);
+                            markBtn.disabled = true;
+                            markBtn.classList.add('opacity-60','cursor-not-allowed');
+                            loadOrders();
+                        } catch (e) {
+                            console.error(e);
+                            alert('Unable to mark order as delivered.');
+                        }
+                    };
+                } else {
+                    markBtn.classList.add('hidden');
+                }
+
+                const itemsContainer = document.getElementById('modalOrderItems');
+                itemsContainer.innerHTML = '';
+                if (!items || items.length === 0) {
+                    itemsContainer.innerHTML = '<p class="text-gray-500">No items in this order.</p>';
+                } else {
+                    for (const it of items) {
+                        const row = document.createElement('div');
+                        row.className = 'border border-gray-200 rounded-lg p-3 flex items-center justify-between';
+                        row.innerHTML = `
+                            <div>
+                                <p class="font-semibold text-gray-800">${escapeHtml(it.product_name)}</p>
+                                <p class="text-sm text-gray-600">Qty: ${it.quantity}</p>
+                            </div>
+                            <p class="font-bold text-gray-800">₱${it.price}</p>
+                        `;
+                        itemsContainer.appendChild(row);
+                    }
+                }
+
+                document.getElementById('orderDetailsModal').classList.remove('hidden');
+                document.getElementById('orderDetailsModal').classList.add('flex');
+            } catch (err) {
+                console.error(err);
+                alert('Failed to load order details');
+            }
+        }
+
+        function closeOrderDetailsModal() {
+            document.getElementById('orderDetailsModal').classList.add('hidden');
+            document.getElementById('orderDetailsModal').classList.remove('flex');
+        }
+
+        document.getElementById('closeDetailsModalBtn').addEventListener('click', closeOrderDetailsModal);
+        document.getElementById('orderDetailsModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('orderDetailsModal')) closeOrderDetailsModal();
+        });
+
+        function escapeHtml(str) {
+            return String(str || '').replace(/[&<>"']/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[s]));
+        }
+
+        const username = localStorage.getItem('username') || 'User';
+        document.getElementById('headerUsername').textContent = username;
+
+        document.addEventListener('DOMContentLoaded', loadOrders);
+    </script>

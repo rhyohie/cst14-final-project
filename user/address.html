@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Addresses</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    </style>
+</head>
+<body class="bg-[#659492] h-screen flex flex-col overflow-hidden text-[#333]">
+
+    <header class="h-[80px] flex justify-between items-center px-10 text-white shrink-0">
+        <div class="flex items-center gap-3 font-bold text-lg">
+            <img src="../icons/Octagon.svg" alt="Logo" class="w-8 h-8">
+            <span>Sample Logo Here</span>
+        </div>
+        
+        <div class="flex items-center gap-3 font-medium">
+            <img src="../icons/Pfp.jpg" alt="Profile" class="w-9 h-9 rounded-full object-cover bg-gray-300">
+            <span id="headerUsername">User</span>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        
+        <aside class="w-[280px] flex flex-col justify-between p-6 pb-10 shrink-0">
+            <nav class="flex flex-col gap-4 mt-4">
+                <a href="profile.html" class="flex items-center gap-4 px-6 py-3 font-bold text-white hover:bg-white/10 rounded-full transition-colors">
+                    <img src="../icons/UserA.svg" alt="Account" class="w-6 h-6">
+                    <span>My Account</span>
+                </a>
+                <a href="cart.html" class="flex items-center gap-4 px-6 py-3 font-bold text-white hover:bg-white/10 rounded-full transition-colors">
+                    <img src="../icons/CartI.svg" alt="Cart" class="w-6 h-6">
+                    <span>Cart</span>
+                </a>
+                <a href="orders.html" class="flex items-center gap-4 px-6 py-3 font-bold text-white hover:bg-white/10 rounded-full transition-colors">
+                    <img src="../icons/GiftA.svg" alt="Orders" class="w-6 h-6">
+                    <span>Orders</span>
+                </a>
+                <a href="#" class="flex items-center gap-4 px-6 py-3 bg-white text-[#659492] rounded-full font-bold shadow-md transition-transform hover:scale-105">
+                    <img src="../icons/HomeI.svg" alt="Addresses" class="w-6 h-6">
+                    <span>Addresses</span>
+                </a>
+                
+                <a href="../Homepage/homepage.html"><button class="w-full py-3 bg-white text-[#333] font-bold rounded-full shadow-md hover:bg-gray-100 transition">
+                    <span>Back to Shop</span></button>                    
+                </a>                
+            </nav>
+
+            <div class="flex flex-col gap-80">
+                <a href="../login/login.html">
+                    <button class="w-full py-3 bg-white text-[#333] font-bold rounded-full shadow-md hover:bg-gray-100 transition">
+                       Log Out
+                    </button>
+                </a>
+            </div>
+        </aside>
+
+        <main class="flex-1 bg-white rounded-tl-[50px] p-4 md:p-10 overflow-hidden relative flex justify-center items-center">
+            
+            <div class="bg-white w-[95%] max-w-6xl rounded-[30px] shadow-[0px_10px_30px_rgba(0,0,0,0.1)] p-8 md:p-12 border border-gray-100 relative h-[85vh] flex flex-col">
+                
+                <h2 class="text-2xl font-bold text-gray-800 mb-8 uppercase tracking-wide shrink-0">My Addresses</h2>
+                
+                <div class="flex-1 flex flex-col gap-5 overflow-y-auto pr-4 custom-scrollbar">
+                    <div id="addressesList" class="flex flex-col gap-4 w-full"></div>
+                </div>
+
+                <div class="mt-4 pt-6 border-t border-gray-100 shrink-0">
+                    <button onclick="openModal()" class="block text-center w-full bg-[#659492] hover:bg-[#537a78] text-white font-bold py-4 rounded-[20px] shadow-lg transition text-lg tracking-wide uppercase">
+                        Add New Address
+                    </button>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <div id="addressModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50 transition-opacity backdrop-blur-sm">
+        
+        <div class="bg-white rounded-[30px] shadow-2xl w-full max-w-lg overflow-hidden transform scale-100 relative m-4">
+            
+            <div class="bg-[#659492] py-4 px-6 text-center relative">
+                <h3 class="text-white font-bold text-xl tracking-wide">New Address</h3>
+                <button onclick="closeModal()" class="absolute top-4 right-6 text-white hover:text-gray-200 text-2xl leading-none">&times;</button>
+            </div>
+
+            <form id="addressForm" onsubmit="handleAddress(event)" class="p-8 flex flex-col gap-4">
+                <input type="hidden" id="addrId" value="">
+                <div>
+                    <label class="block text-gray-700 font-bold mb-2 text-sm">Label (e.g., Home, Work)</label>
+                    <input id="addrLabel" type="text" name="label" class="w-full p-3 border border-gray-300 rounded-[15px] focus:outline-none focus:border-[#659492]" placeholder="Home" required>
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 font-bold mb-2 text-sm">Full Address</label>
+                    <textarea id="addrFull" name="full_address" rows="3" class="w-full p-3 border border-gray-300 rounded-[15px] focus:outline-none focus:border-[#659492]" placeholder="Street, Barangay, City, Province" required></textarea>
+                </div>
+
+                <div class="flex gap-4 mt-4">
+                    <button type="button" onclick="closeModal()" class="flex-1 py-3 bg-gray-100 text-gray-600 font-bold rounded-[15px] text-center hover:bg-gray-200 transition">Cancel</button>
+                    <button type="submit" class="flex-1 py-3 bg-[#659492] text-white font-bold rounded-[15px] hover:bg-[#537a78] transition shadow-md">
+                        Save Address
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('addressModal');
+        const addrForm = document.getElementById('addressForm');
+        const addrIdField = document.getElementById('addrId');
+        const addrLabelField = document.getElementById('addrLabel');
+        const addrFullField = document.getElementById('addrFull');
+        const addressesList = document.getElementById('addressesList');
+
+        let addresses = [];
+        let currentUserId = null;
+
+        function openModalForAdd() {
+            addrIdField.value = '';
+            addrLabelField.value = '';
+            addrFullField.value = '';
+            openModal();
+        }
+
+        function openModalForEdit(addr) {
+            addrIdField.value = addr.id;
+            addrLabelField.value = addr.label || '';
+            addrFullField.value = addr.street || '';
+            openModal();
+        }
+
+        function openModal() {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Close if clicking outside the modal box
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        function checkAuth() {
+            currentUserId = localStorage.getItem('userId');
+            if (!currentUserId) {
+                alert('Please log in first');
+                window.location.href = '../login/login.html';
+                return;
+            }
+            loadAddresses(currentUserId);
+        }
+
+        async function loadAddresses(userId) {
+            try {
+                const res = await fetch(`/api/addresses/${userId}`);
+                if (!res.ok) throw new Error('Failed to load addresses');
+                addresses = await res.json();
+                renderAddresses();
+            } catch (err) {
+                console.error(err);
+                addressesList.innerHTML = '<div class="text-center text-red-500 py-8">Error loading addresses</div>';
+            }
+        }
+
+        function renderAddresses() {
+            addressesList.innerHTML = '';
+            if (!addresses || addresses.length === 0) {
+                addressesList.innerHTML = '<div class="text-center text-gray-500 py-8">No addresses yet. Click "Add New Address" to create one.</div>';
+                return;
+            }
+
+            addresses.forEach(addr => {
+                const row = document.createElement('div');
+                row.className = 'border border-gray-400 rounded-[25px] p-6 flex items-center justify-between hover:shadow-md transition';
+
+                const left = document.createElement('div');
+                left.className = 'flex items-center gap-6';
+
+                const iconWrap = document.createElement('div');
+                iconWrap.className = 'w-12 h-12 bg-gray-400 rounded-full flex items-center justify-center text-[#659492]';
+                const icon = document.createElement('img');
+                icon.src = '../icons/HomeA.svg';
+                icon.className = 'w-6 h-6';
+                iconWrap.appendChild(icon);
+
+                const info = document.createElement('div');
+                const title = document.createElement('h3');
+                title.className = 'font-bold text-lg text-gray-800';
+                title.textContent = addr.label || 'Address';
+                const p = document.createElement('p');
+                p.className = 'text-gray-600';
+                p.textContent = addr.street || '';
+                info.appendChild(title);
+                info.appendChild(p);
+
+                left.appendChild(iconWrap);
+                left.appendChild(info);
+
+                const actions = document.createElement('div');
+                actions.className = 'flex items-center gap-4';
+
+                if (addr.is_default === 1) {
+                    const badge = document.createElement('span');
+                    badge.className = 'px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold mr-2';
+                    badge.textContent = 'Default';
+                    actions.appendChild(badge);
+                } else {
+                    const defBtn = document.createElement('button');
+                    defBtn.className = 'px-3 py-1 bg-white border rounded-full text-sm hover:bg-gray-50';
+                    defBtn.textContent = 'Set Default';
+                    defBtn.onclick = () => setDefault(addr.id);
+                    actions.appendChild(defBtn);
+                }
+
+                const editBtn = document.createElement('button');
+                editBtn.className = 'p-2 hover:bg-teal-50 rounded-full transition';
+                editBtn.title = 'Edit Address';
+                const editImg = document.createElement('img');
+                editImg.src = '../icons/edit.svg';
+                editImg.className = 'w-6 h-6';
+                editBtn.appendChild(editImg);
+                editBtn.onclick = () => openModalForEdit(addr);
+
+                const delBtn = document.createElement('button');
+                delBtn.className = 'p-2 hover:bg-red-50 rounded-full transition group';
+                delBtn.title = 'Delete Address';
+                const delImg = document.createElement('img');
+                delImg.src = '../icons/Trash.svg';
+                delImg.className = 'w-6 h-6 opacity-60 group-hover:opacity-100';
+                delBtn.appendChild(delImg);
+                delBtn.onclick = () => deleteAddress(addr.id);
+
+                actions.appendChild(editBtn);
+                actions.appendChild(delBtn);
+
+                row.appendChild(left);
+                row.appendChild(actions);
+
+                addressesList.appendChild(row);
+            });
+        }
+
+        async function handleAddress(event) {
+            event.preventDefault();
+            const id = addrIdField.value;
+            const label = addrLabelField.value.trim();
+            const full = addrFullField.value.trim();
+
+            if (!full) return alert('Full address is required');
+
+            try {
+                if (id) {
+                    const res = await fetch(`/api/addresses/${id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ label: label || null, street: full, city: null, state: null, zipcode: null, country: null, is_default: 0 })
+                    });
+                    if (!res.ok) throw new Error('Failed to update address');
+                    alert('Address updated');
+                } else {
+                    const res = await fetch('/api/addresses', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ user_id: currentUserId, label: label || null, street: full, city: null, state: null, zipcode: null, country: null })
+                    });
+                    if (!res.ok) throw new Error('Failed to create address');
+                    alert('Address added');
+                }
+                closeModal();
+                loadAddresses(currentUserId);
+            } catch (err) {
+                console.error(err);
+                alert('Error saving address');
+            }
+        }
+
+        async function deleteAddress(id) {
+            if (!confirm('Delete this address?')) return;
+            try {
+                const res = await fetch(`/api/addresses/${id}`, { method: 'DELETE' });
+                if (!res.ok) throw new Error('Failed to delete');
+                alert('Address deleted');
+                loadAddresses(currentUserId);
+            } catch (err) {
+                console.error(err);
+                alert('Error deleting address');
+            }
+        }
+
+        async function setDefault(id) {
+            try {
+                const addr = addresses.find(a => a.id === id);
+                if (!addr) return alert('Address not found');
+                const res = await fetch(`/api/addresses/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ label: addr.label || null, street: addr.street || null, city: null, state: null, zipcode: null, country: null, is_default: 1 })
+                });
+                if (!res.ok) throw new Error('Failed to set default');
+                alert('Default address updated');
+                loadAddresses(currentUserId);
+            } catch (err) {
+                console.error(err);
+                alert('Error setting default');
+            }
+        }
+
+        const username = localStorage.getItem('username') || 'User';
+        document.getElementById('headerUsername').textContent = username;
+
+        document.addEventListener('DOMContentLoaded', checkAuth);
+    </script>
+
+</body>
+</html>

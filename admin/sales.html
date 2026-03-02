@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Sales</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; margin: 10px 0; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #999; }
+    </style>
+</head>
+<body class="bg-[#659492] h-screen flex flex-col overflow-hidden text-[#333]">
+
+    <header class="h-[80px] flex justify-between items-center px-10 text-white shrink-0">
+        <div class="flex items-center gap-3 font-bold text-lg">
+            <img src="../icons/logo.svg" alt="Logo" class="w-8 h-8">
+            <span>Pet Stay-tion</span>
+        </div>
+        
+        <div class="flex items-center gap-3 font-medium">
+            <img src="../icons/Pfp.jpg" alt="Admin" class="w-9 h-9 rounded-full object-cover bg-gray-300">
+            <span>Admin</span>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        
+        <aside class="w-[280px] flex flex-col justify-between p-6 pb-10 shrink-0">
+            <nav class="flex flex-col gap-4 mt-4">
+                
+                <a href="overview.html" class="flex items-center gap-4 px-6 py-3 font-bold text-white hover:bg-white/10 rounded-full transition-colors">
+                    <img src="overviewA.svg" alt="Overview" class="w-6 h-6 brightness-0 invert">
+                    <span>Overview</span>
+                </a>
+
+                <a href="inventory.html" class="flex items-center gap-4 px-6 py-3 font-bold text-white hover:bg-white/10 rounded-full transition-colors">
+                    <img src="inventoryI.svg" alt="Inventory" class="w-6 h-6 brightness-0 invert">
+                    <span>Inventory</span>
+                </a>
+
+                <a href="#" class="flex items-center gap-4 px-6 py-3 bg-white text-[#659492] rounded-full font-bold shadow-md transition-transform hover:scale-105">
+                    <img src="salesA.svg" alt="Sales" class="w-6 h-6">
+                    <span>Sales</span>
+                </a>
+
+                <a href="users.html" class="flex items-center gap-4 px-6 py-3 font-bold text-white hover:bg-white/10 rounded-full transition-colors">
+                    <img src="usersI.svg" alt="Customers" class="w-6 h-6 brightness-0 invert">
+                    <span>Customers</span>
+                </a>
+
+                <a href="../Homepage/homepage.html" class="mt-4">
+                    <button class="w-full py-3 bg-white text-[#659492] font-bold rounded-full shadow-md hover:bg-gray-100 transition flex items-center justify-center gap-2">
+                        <span>Go to Shop</span>
+                    </button>                    
+                </a>                
+            </nav>
+
+            <div class="flex flex-col">
+                <a href="../login/login.html">
+                    <button class="w-full py-3 bg-white text-[#333] font-bold rounded-full shadow-md hover:bg-gray-100 transition">
+                        Log Out
+                    </button>
+                </a>
+            </div>
+        </aside>
+
+        <main class="flex-1 bg-white rounded-tl-[50px] p-4 md:p-12 overflow-hidden relative flex justify-center items-center">
+            
+            <div class="bg-[#F3F4F6] w-full max-w-6xl h-[85vh] rounded-[30px] shadow-inner relative flex flex-col overflow-hidden">
+                
+                <div class="flex-1 overflow-y-auto custom-scrollbar p-8">
+                    
+                    <h1 class="text-3xl font-extrabold text-gray-800 mb-6">Welcome Admin!</h1>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
+                        <div class="bg-white p-5 rounded-[20px] shadow-sm flex flex-col items-center justify-center text-center">
+                            <h3 class="text-gray-800 font-bold text-lg mb-1">Total Revenue</h3>
+                            <div id="totalRevenue" class="text-4xl font-extrabold text-gray-900 mb-1">₱0</div>
+                            <p class="text-xs font-bold text-green-600 flex items-center gap-1">
+                                <span class="text-green-500 text-lg">▲</span> +18% From last month
+                            </p>
+                        </div>
+                        <div class="bg-white p-5 rounded-[20px] shadow-sm flex flex-col items-center justify-center text-center">
+                            <h3 class="text-gray-800 font-bold text-lg mb-1">Active Orders</h3>
+                            <div id="activeOrders" class="text-4xl font-extrabold text-gray-900 mb-1">0</div>
+                            <p class="text-xs font-bold text-red-500 flex items-center gap-1">
+                                <span class="text-red-500 text-lg">▼</span> -5% From last month
+                            </p>
+                        </div>
+                        <div class="bg-white p-5 rounded-[20px] shadow-sm flex flex-col items-center justify-center text-center">
+                            <h3 class="text-gray-800 font-bold text-lg mb-1">Completed Orders</h3>
+                            <div id="completedOrders" class="text-4xl font-extrabold text-gray-900 mb-1">0</div>
+                            <p class="text-xs font-bold text-green-600 flex items-center gap-1">
+                                <span class="text-green-500 text-lg">▲</span> +130% From last month
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-[20px] shadow-sm flex flex-col md:flex-row gap-6 mb-5">
+                        <div class="flex-1 flex flex-col">
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Revenue</h3>
+                            
+                            <div class="flex-1 bg-[#F9FAFB] rounded-xl border border-gray-100 relative h-[220px] w-full p-4">
+                                <canvas id="revenueChart" class="w-full h-full" height="220"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="w-full md:w-[200px] flex flex-col items-center gap-4 pt-2">
+                            <span class="bg-[#659492] text-white px-6 py-1 rounded-full text-sm font-bold shadow-sm">Weekly</span>
+                            <div class="text-center">
+                                <h2 class="text-3xl font-extrabold text-gray-800">+18%</h2>
+                                <p class="text-xs font-bold text-gray-500">From last week</p>
+                            </div>
+                            <div class="w-full flex flex-col gap-2 mt-2">
+                                <div class="relative">
+                                    <span class="absolute top-[-8px] left-2 bg-white px-1 text-[10px] text-gray-500">From</span>
+                                    <input type="date" id="salesFromDate" class="w-full border border-gray-300 rounded-full px-4 py-2 text-sm text-gray-600 outline-none focus:border-[#659492]">
+                                </div>
+                                <div class="relative">
+                                    <span class="absolute top-[-8px] left-2 bg-white px-1 text-[10px] text-gray-500">To</span>
+                                    <input type="date" id="salesToDate" class="w-full border border-gray-300 rounded-full px-4 py-2 text-sm text-gray-600 outline-none focus:border-[#659492]">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        
+                        <div class="bg-white p-6 rounded-[20px] shadow-sm flex flex-col gap-4 lg:col-span-2">
+                            <h3 class="text-xl font-bold text-gray-800">Transaction History</h3>                          
+                            <div id="transactionsContainer">
+                            </div>
+                        </div>
+
+                        <div id="adminOrderModal" class="fixed inset-0 z-50 hidden justify-center items-center bg-black/50 backdrop-blur-sm">
+                            <div class="bg-white w-full max-w-2xl rounded-[30px] shadow-2xl p-8 relative m-4 max-h-[80vh] overflow-y-auto">
+                                <div class="flex justify-between items-center mb-6">
+                                    <h2 class="text-2xl font-bold text-gray-800">Order Details</h2>
+                                    <button id="closeAdminOrderModal" class="text-gray-500 hover:text-gray-700 text-2xl leading-none">&times;</button>
+                                </div>
+                                <div class="mb-6 pb-6 border-b border-gray-200">
+                                    <div class="grid grid-cols-2 gap-4 mb-4">
+                                        <div>
+                                            <p class="text-sm text-gray-600">Order ID</p>
+                                            <p class="text-lg font-bold text-gray-800" id="adminModalOrderId">-</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-600">Customer</p>
+                                            <p class="text-lg font-bold text-gray-800" id="adminModalOrderCustomer">-</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-600">Order Date</p>
+                                            <p class="text-lg font-bold text-gray-800" id="adminModalOrderDate">-</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-600">Status</p>
+                                            <p class="text-lg font-bold" id="adminModalOrderStatus">-</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-600">Total Amount</p>
+                                            <p class="text-lg font-bold text-gray-800" id="adminModalOrderTotal">-</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-gray-800 mb-4">Items</h3>
+                                    <div id="adminModalOrderItems" class="space-y-3">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-[20px] shadow-sm flex flex-col items-center gap-4 lg:col-span-1">
+                            <h3 class="text-xl font-bold text-gray-800">Best Selling</h3>
+                            <div id="bestSellingList" class="w-full flex flex-col gap-3">
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let chartInstance = null;
+
+        async function loadSalesData() {
+            try {
+                const [summaryRes, txRes, bestRes, monthlyRes] = await Promise.all([
+                    fetch('/api/admin/sales/summary'),
+                    fetch('/api/admin/sales/transactions'),
+                    fetch('/api/admin/sales/best-sellers'),
+                    fetch('/api/admin/sales/monthly')
+                ]);
+                const summary = await summaryRes.json();
+                const transactions = await txRes.json();
+                const best = await bestRes.json();
+                const monthlyData = await monthlyRes.json();
+
+                document.getElementById('totalRevenue').textContent =
+                    '₱' + (summary.totalRevenue || 0).toLocaleString();
+                document.getElementById('activeOrders').textContent = summary.activeOrders || 0;
+                document.getElementById('completedOrders').textContent = summary.completedOrders || 0;
+
+                const txContainer = document.getElementById('transactionsContainer');
+                txContainer.innerHTML = '';
+                transactions.forEach(o => {
+                    const div = document.createElement('div');
+                    div.className = 'border border-gray-800 rounded-full px-6 py-3 flex items-center justify-between hover:bg-gray-50 transition text-sm cursor-pointer';
+                    div.innerHTML = `
+                        <span class="font-medium text-gray-700 w-1/6">#OR${o.id}</span>
+                        <span class="font-medium text-gray-700 w-1/4">${o.username||'Unknown'}</span>
+                        <span class="text-gray-500 w-1/4 text-center">${new Date(o.order_date).toLocaleString()}</span>
+                        <span class="text-gray-700 font-medium w-1/6 text-center">Cash</span>
+                        <span class="font-bold text-[#659492] w-1/6 text-right">${o.status || ''}</span>
+                    `;
+                    div.addEventListener('click', () => openAdminOrderModal(o.id));
+                    txContainer.appendChild(div);
+                });
+
+                const bestContainer = document.getElementById('bestSellingList');
+                bestContainer.innerHTML = '';
+                best.forEach(p => {
+                    const div = document.createElement('div');
+                    div.className = 'w-full border border-black rounded-full py-3 text-center font-medium text-gray-800 hover:bg-gray-50 transition cursor-default';
+                    div.textContent = p.product_name + (p.qty ? ` (${p.qty})` : '');
+                    bestContainer.appendChild(div);
+                });
+
+                renderChart(monthlyData);
+
+                const fromInput = document.getElementById('salesFromDate');
+                const toInput = document.getElementById('salesToDate');
+                fromInput.addEventListener('change', () => updateSalesChart(monthlyData));
+                toInput.addEventListener('change', () => updateSalesChart(monthlyData));
+
+            } catch (err) {
+                console.error('Failed to load sales data', err);
+            }
+        }
+
+        function renderChart(data) {
+            let labels = data.map(d => d.month_name || ('M' + (d.month || '')));
+            let chartData = data.map(d => (d.revenue || 0) / 1000);
+            if (!labels || labels.length === 0) {
+                labels = ['No data'];
+                chartData = [0];
+            }
+
+            const canvas = document.getElementById('revenueChart');
+            canvas.style.width = '100%';
+            canvas.style.display = 'block';
+            const ctx = canvas.getContext('2d');
+
+            if (chartInstance) chartInstance.destroy();
+            chartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Revenue (₱k)',
+                        data: chartData,
+                        borderColor: '#34D399',
+                        backgroundColor: 'rgba(212, 250, 229, 0.3)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#34D399',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) { return '₱' + value + 'k'; }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateSalesChart(monthlyData) {
+            const fromInput = document.getElementById('salesFromDate').value;
+            const toInput = document.getElementById('salesToDate').value;
+            let filteredData = monthlyData;
+
+            if (fromInput || toInput) {
+                const fromDate = fromInput ? new Date(fromInput) : new Date('1970-01-01');
+                const toDate = toInput ? new Date(toInput) : new Date('2099-12-31');
+
+                filteredData = monthlyData.filter(d => {
+                    if (!d.month) return true;
+                    const monthDate = new Date(new Date().getFullYear(), parseInt(d.month) - 1, 1);
+                    return monthDate >= fromDate && monthDate <= toDate;
+                });
+            }
+
+            renderChart(filteredData.length > 0 ? filteredData : monthlyData);
+        }
+
+        function escapeHtml(str) {
+            return String(str || '').replace(/[&<>"']/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[s]));
+        }
+
+        async function openAdminOrderModal(orderId) {
+            try {
+                const res = await fetch(`/api/admin/orders/${orderId}`);
+                if (!res.ok) throw new Error('Failed to fetch order details');
+                const { order, items } = await res.json();
+
+                document.getElementById('adminModalOrderId').textContent = '#' + order.id;
+                document.getElementById('adminModalOrderCustomer').textContent = escapeHtml(order.username || 'Unknown');
+                document.getElementById('adminModalOrderDate').textContent = new Date(order.order_date).toLocaleDateString();
+                document.getElementById('adminModalOrderStatus').textContent = escapeHtml(order.status || 'N/A');
+                document.getElementById('adminModalOrderTotal').textContent = '₱' + (order.total_amount || 0);
+
+                const itemsContainer = document.getElementById('adminModalOrderItems');
+                itemsContainer.innerHTML = '';
+                if (!items || items.length === 0) {
+                    itemsContainer.innerHTML = '<p class="text-gray-500">No items in this order.</p>';
+                } else {
+                    items.forEach(it => {
+                        const row = document.createElement('div');
+                        row.className = 'border border-gray-200 rounded-lg p-3 flex items-center justify-between';
+                        row.innerHTML = `
+                            <div>
+                                <p class="font-semibold text-gray-800">${escapeHtml(it.product_name)}</p>
+                                <p class="text-sm text-gray-600">Qty: ${it.quantity}</p>
+                            </div>
+                            <p class="font-bold text-gray-800">₱${it.price}</p>
+                        `;
+                        itemsContainer.appendChild(row);
+                    });
+                }
+
+                document.getElementById('adminOrderModal').classList.remove('hidden');
+                document.getElementById('adminOrderModal').classList.add('flex');
+            } catch (err) {
+                console.error(err);
+                alert('Failed to load order details');
+            }
+        }
+
+        function closeAdminOrderModal() {
+            document.getElementById('adminOrderModal').classList.add('hidden');
+            document.getElementById('adminOrderModal').classList.remove('flex');
+        }
+
+        document.getElementById('closeAdminOrderModal').addEventListener('click', closeAdminOrderModal);
+        document.getElementById('adminOrderModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('adminOrderModal')) closeAdminOrderModal();
+        });
+
+        window.addEventListener('DOMContentLoaded', loadSalesData);
+    </script>
+</body>
+</html>

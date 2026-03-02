@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    </style>
+</head>
+<body class="bg-[#659492] h-screen flex flex-col overflow-hidden text-[#333]">
+
+    <header class="h-[80px] flex justify-between items-center px-10 text-white shrink-0">
+        <div class="flex items-center gap-3 font-bold text-lg">
+            <img src="../icons/Octagon.svg" alt="Logo" class="w-8 h-8">
+            <span>Sample Logo Here</span>
+        </div>
+        
+        <div class="flex items-center gap-3 font-medium">
+            <img src="../icons/Pfp.jpg" alt="Profile" class="w-9 h-9 rounded-full object-cover bg-gray-300">
+            <span id="headerUsername">User</span>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        
+        <aside class="w-[280px] flex flex-col justify-between p-6 pb-10 shrink-0">
+            <nav class="flex flex-col gap-4 mt-4">
+                <a href="profile.html" class="flex items-center gap-4 px-6 py-3 font-bold text-white hover:bg-white/10 rounded-full transition-colors">
+                    <img src="../icons/UserA.svg" alt="Account" class="w-6 h-6">
+                    <span>My Account</span>
+                </a>
+                
+                <a href="#" class="flex items-center gap-4 px-6 py-3 bg-white text-[#659492] rounded-full font-bold shadow-md transition-transform hover:scale-105">
+                    <img src="../icons/CartA.svg" alt="Cart" class="w-6 h-6">
+                    <span>Cart</span>
+                </a>
+                
+                <a href="orders.html" class="flex items-center gap-4 px-6 py-3 font-bold text-white hover:bg-white/10 rounded-full transition-colors">
+                    <img src="../icons/GiftA.svg" alt="Orders" class="w-6 h-6">
+                    <span>Orders</span>
+                </a>
+                <a href="address.html" class="flex items-center gap-4 px-6 py-3 font-bold text-white hover:bg-white/10 rounded-full transition-colors">
+                    <img src="../icons/HomeA.svg" alt="Addresses" class="w-6 h-6">
+                    <span>Addresses</span>
+                </a>
+                
+                <a href="../Homepage/homepage.html">
+                    <button class="w-full py-3 bg-white text-[#333] font-bold rounded-full shadow-md hover:bg-gray-100 transition">
+                    <span>Back to Shop</span></button>                    
+                </a>                
+            </nav>
+            <div class="flex flex-col gap-80">
+                <a href="../login/login.html">
+                    <button class="w-full py-3 bg-white text-[#333] font-bold rounded-full shadow-md hover:bg-gray-100 transition">
+                        Log Out
+                    </button>
+                </a>
+            </div>
+        </aside>
+
+        <main class="flex-1 bg-white rounded-tl-[50px] p-4 md:p-10 overflow-y-auto relative flex justify-center items-center">
+    
+            <div class="bg-white w-[95%] max-w-6xl rounded-[30px] shadow-[0px_10px_30px_rgba(0,0,0,0.1)] p-8 md:p-12 border border-gray-100 relative h-[85vh] flex flex-col">
+            
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 uppercase tracking-wide shrink-0">My Cart</h2>
+                
+                <div class="flex-1 flex flex-col gap-5 overflow-y-auto pr-4 custom-scrollbar" id="cartItemsContainer">
+                    <div id="cartLoading" class="text-center text-gray-500 py-8">Loading cart...</div>
+                </div>
+
+                <div class="mt-4 pt-6 border-t border-gray-100 shrink-0">
+                    <div class="flex justify-end mb-4">
+                        <span class="text-xl font-bold text-gray-800">My Total: <span class="text-[#333]">₱2,000</span></span>
+                    </div>
+                    
+                    <button onclick="openModal()" class="block text-center w-full bg-[#659492] hover:bg-[#537a78] text-white font-bold py-4 rounded-[20px] shadow-lg transition text-lg tracking-wide uppercase">
+                        Check Out
+                    </button>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <div id="confirmModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50 transition-opacity backdrop-blur-sm">
+        
+        <div class="bg-white rounded-[20px] shadow-2xl w-full max-w-md overflow-hidden transform scale-100 relative m-4">
+            
+            <div class="bg-[#659492] py-4 px-6 text-center">
+                <h3 class="text-white font-bold text-xl tracking-wide">Confirmation</h3>
+            </div>
+            
+            <div class="p-8 text-center">
+                <p class="text-gray-700 text-lg font-medium leading-relaxed">
+                    Would you like to check out the chosen product/s?
+                </p>
+            </div>
+            
+            <div class="flex border-t border-gray-200">
+                <button onclick="closeModal()" class="flex-1 py-4 text-gray-600 font-bold hover:bg-gray-50 text-center transition border-r border-gray-200">
+                    Cancel
+                </button>
+                <button onclick="handleCheckout()" class="flex-1 py-4 text-[#659492] font-bold hover:bg-teal-50 text-center transition">
+                    Yes
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('confirmModal');
+
+        function openModal() {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        async function loadCart() {
+            const userId = localStorage.getItem('userId');
+            const container = document.getElementById('cartItemsContainer');
+            const loading = document.getElementById('cartLoading');
+            if (!userId) {
+                container.innerHTML = '<div class="text-center text-gray-500 py-8">Please log in to see your cart.</div>';
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/cart/' + userId, { credentials: 'include' });
+                if (!res.ok) throw new Error('Failed to load cart');
+                const items = await res.json();
+                renderCart(items || []);
+            } catch (err) {
+                console.error(err);
+                container.innerHTML = '<div class="text-center text-red-500 py-8">Unable to load cart.</div>';
+            }
+        }
+
+        function renderCart(items) {
+            const container = document.getElementById('cartItemsContainer');
+            if (!items || items.length === 0) {
+                container.innerHTML = '<div class="text-center text-gray-500 py-8">Your cart is empty.</div>';
+                document.querySelector('.mt-4 .text-xl') && (document.querySelector('.mt-4 .text-xl').innerHTML = 'My Total: <span class="text-[#333]">₱0</span>');
+                return;
+            }
+
+            container.innerHTML = '';
+            let total = 0;
+            for (const it of items) {
+                total += (it.price || 0) * (it.quantity || 1);
+                const row = document.createElement('div');
+                row.className = 'border border-gray-400 rounded-[20px] p-4 flex items-center justify-between hover:shadow-sm transition shrink-0';
+                row.innerHTML = `
+                    <div class="flex items-center gap-6">
+                        <input type="checkbox" name="selected_items[]" value="${it.id}" class="w-5 h-5 accent-[#659492] cursor-pointer" checked>
+                        <img src="../icons/Octagon.svg" alt="Product" class="w-12 h-12"> 
+                        <span class="font-medium text-lg text-gray-700">${escapeHtml(it.product_name)}</span>
+                    </div>
+                    <div class="flex items-center gap-10">
+                        <span class="font-bold text-gray-600 text-lg">₱${it.price}</span>
+                        <div class="flex items-center gap-4 font-bold text-xl text-gray-700">
+                            <button data-id="${it.id}" class="qty-decrease hover:text-[#659492] transition font-mono cursor-pointer">-</button>
+                            <span class="qty-number">${it.quantity}</span>
+                            <button data-id="${it.id}" class="qty-increase hover:text-[#659492] transition font-mono cursor-pointer">+</button>
+                        </div>
+                        <button data-id="${it.id}" class="remove-item hover:bg-red-50 p-2 rounded-full transition group" title="Remove Item">
+                            <img src="../icons/Trash.svg" alt="Delete" class="w-6 h-6">
+                        </button>
+                    </div>
+                `;
+
+                container.appendChild(row);
+            }
+
+            const totalEl = document.querySelector('.mt-4 .text-xl');
+            if (totalEl) totalEl.innerHTML = `My Total: <span class="text-[#333]">₱${total}</span>`;
+
+            container.querySelectorAll('.qty-increase').forEach(btn => {
+                btn.addEventListener('click', async () => {
+                    const id = btn.getAttribute('data-id');
+                    const qtyEl = btn.parentElement.querySelector('.qty-number');
+                    const newQty = parseInt(qtyEl.textContent) + 1;
+                    await updateQuantity(id, newQty);
+                    await loadCart();
+                });
+            });
+
+            container.querySelectorAll('.qty-decrease').forEach(btn => {
+                btn.addEventListener('click', async () => {
+                    const id = btn.getAttribute('data-id');
+                    const qtyEl = btn.parentElement.querySelector('.qty-number');
+                    const newQty = Math.max(1, parseInt(qtyEl.textContent) - 1);
+                    await updateQuantity(id, newQty);
+                    await loadCart();
+                });
+            });
+
+            container.querySelectorAll('.remove-item').forEach(btn => {
+                btn.addEventListener('click', async () => {
+                    const id = btn.getAttribute('data-id');
+                    if (!confirm('Remove this item from cart?')) return;
+                    await removeItem(id);
+                    await loadCart();
+                });
+            });
+        }
+
+        async function updateQuantity(cartId, quantity) {
+            try {
+                const res = await fetch('/api/cart/' + cartId, {
+                    method: 'PUT',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ quantity })
+                });
+                if (!res.ok) throw new Error('Failed to update quantity');
+            } catch (err) {
+                console.error(err);
+                alert('Unable to update quantity');
+            }
+        }
+
+        async function removeItem(cartId) {
+            try {
+                const res = await fetch('/api/cart/' + cartId, { method: 'DELETE', credentials: 'include' });
+                if (!res.ok) throw new Error('Failed to remove item');
+            } catch (err) {
+                console.error(err);
+                alert('Unable to remove item');
+            }
+        }
+
+        async function handleCheckout() {
+            const userId = localStorage.getItem('userId');
+            if (!userId) return alert('Please log in to checkout');
+            try {
+                console.log('[CHECKOUT] Starting checkout for user:', userId);
+                
+                const res = await fetch('/api/cart/' + userId, { credentials: 'include' });
+                if (!res.ok) throw new Error('Failed to fetch cart');
+                const items = await res.json();
+                console.log('[CHECKOUT] Cart items:', items);
+                
+                if (!items || items.length === 0) {
+                    alert('Your cart is empty!');
+                    return;
+                }
+                
+                const total = items.reduce((s, it) => s + (it.price || 0) * (it.quantity || 1), 0);
+                console.log('[CHECKOUT] Total amount:', total);
+
+                const orderRes = await fetch('/api/orders', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ total_amount: total })
+                });
+                
+                if (!orderRes.ok) {
+                    const errData = await orderRes.text();
+                    console.error('[CHECKOUT] Order response error:', orderRes.status, errData);
+                    throw new Error('Server error: ' + orderRes.status + ' - ' + errData);
+                }
+                
+                const orderData = await orderRes.json();
+                console.log('[CHECKOUT] Order created:', orderData);
+
+                alert('Order placed successfully!');
+                closeModal();
+                window.location.href = 'orders.html';
+            } catch (err) {
+                console.error('[CHECKOUT] Error:', err);
+                alert('Checkout failed: ' + err.message);
+            }
+        }
+
+        function escapeHtml(str) {
+            return String(str || '').replace(/[&<>"']/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[s]));
+        }
+
+        const username = localStorage.getItem('username') || 'User';
+        document.getElementById('headerUsername').textContent = username;
+
+        document.addEventListener('DOMContentLoaded', loadCart);
+    </script>
+
+</body>
+</html>

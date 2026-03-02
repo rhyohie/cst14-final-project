@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Overview</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>        
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; margin: 10px 0; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #999; }
+    </style>
+</head>
+<body class="bg-[#659492] h-screen flex flex-col overflow-hidden text-[#333]">
+
+    <header class="h-[80px] flex justify-between items-center px-10 text-white shrink-0">
+        <div class="flex items-center gap-3 font-bold text-lg">
+            <img src="../icons/logo.svg" alt="Logo" class="w-8 h-8">
+            <span>Pet Stay-tion</span>
+        </div>
+        
+        <div class="flex items-center gap-3 font-medium">
+            <img src="../icons/Pfp.jpg" alt="Admin" class="w-9 h-9 rounded-full object-cover bg-gray-300">
+            <span>Admin</span>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        
+        <aside class="w-[280px] flex flex-col justify-between p-6 pb-10 shrink-0">
+            <nav class="flex flex-col gap-4 mt-4">
+                
+                <a href="#" class="flex items-center gap-4 px-6 py-3 bg-white text-[#659492] rounded-full font-bold shadow-md transition-transform hover:scale-105">
+                    <img src="overviewA.svg" alt="Overview" class="w-6 h-6">
+                    <span>Overview</span>
+                </a>
+
+                <a href="inventory.html" class="flex items-center gap-4 px-6 py-3 font-bold text-white hover:bg-white/10 rounded-full transition-colors">
+                    <img src="inventoryI.svg" alt="Inventory" class="w-6 h-6 brightness-0 invert">
+                    <span>Inventory</span>
+                </a>
+
+                <a href="sales.html" class="flex items-center gap-4 px-6 py-3 font-bold text-white hover:bg-white/10 rounded-full transition-colors">
+                    <img src="salesI.svg" alt="Sales" class="w-6 h-6 brightness-0 invert">
+                    <span>Sales</span>
+                </a>
+
+                <a href="users.html" class="flex items-center gap-4 px-6 py-3 font-bold text-white hover:bg-white/10 rounded-full transition-colors">
+                    <img src="usersI.svg" alt="Customers" class="w-6 h-6 brightness-0 invert">
+                    <span>Customers</span>
+                </a>
+
+                <a href="../Homepage/homepage.html" class="mt-4">
+                    <button class="w-full py-3 bg-white text-[#659492] font-bold rounded-full shadow-md hover:bg-gray-100 transition flex items-center justify-center gap-2">
+                        <span>Go to Shop</span>
+                    </button>                    
+                </a>                
+            </nav>
+
+            <div class="flex flex-col">
+                <a href="../login/login.html">
+                    <button class="w-full py-3 bg-white text-[#333] font-bold rounded-full shadow-md hover:bg-gray-100 transition">
+                        Log Out
+                    </button>
+                </a>
+            </div>
+        </aside>
+
+        <main class="flex-1 bg-white rounded-tl-[50px] p-4 md:p-12 overflow-hidden relative flex justify-center items-center">
+            
+            <div class="bg-[#F3F4F6] w-full max-w-6xl h-[85vh] rounded-[30px] shadow-inner relative flex flex-col overflow-hidden">
+                
+                <div class="flex-1 overflow-y-auto custom-scrollbar p-8">
+                    
+                    <h1 class="text-3xl font-extrabold text-gray-800 mb-6">Welcome Admin!</h1>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
+                        <div class="bg-white p-5 rounded-[20px] shadow-sm flex flex-col items-center justify-center text-center">
+                            <h3 class="text-gray-800 font-bold text-lg mb-1">Total Revenue</h3>
+                            <div id="overviewRevenue" class="text-4xl font-extrabold text-gray-900 mb-1">₱0</div>
+                            <p class="text-xs font-bold text-green-600 flex items-center gap-1">
+                                <span class="text-green-500 text-lg">▲</span> +18% From last month
+                            </p>
+                        </div>
+                        <div class="bg-white p-5 rounded-[20px] shadow-sm flex flex-col items-center justify-center text-center">
+                            <h3 class="text-gray-800 font-bold text-lg mb-1">Inventory</h3>
+                            <div id="overviewInventory" class="text-4xl font-extrabold text-gray-900 mb-1">0</div>
+                            <p class="text-xs font-bold text-red-500 flex items-center gap-1">
+                                <span class="text-red-500 text-lg">▼</span> -5% From last month
+                            </p>
+                        </div>
+                        <div class="bg-white p-5 rounded-[20px] shadow-sm flex flex-col items-center justify-center text-center">
+                            <h3 class="text-gray-800 font-bold text-lg mb-1">Total Customers</h3>
+                            <div id="overviewCustomers" class="text-4xl font-extrabold text-gray-900 mb-1">0</div>
+                            <p class="text-xs font-bold text-green-600 flex items-center gap-1">
+                                <span class="text-green-500 text-lg">▲</span> +130% From last month
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-[20px] shadow-sm flex flex-col md:flex-row gap-6 mb-5">
+                        <div class="flex-1 flex flex-col">
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Revenue</h3>
+                            
+                            <div class="flex-1 bg-[#F9FAFB] rounded-xl border border-gray-100 relative h-[220px] w-full p-4">
+                                <canvas id="overviewRevenueChart" class="w-full h-full" height="220"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="w-full md:w-[200px] flex flex-col items-center gap-4 pt-2">
+                            <span class="bg-[#659492] text-white px-6 py-1 rounded-full text-sm font-bold shadow-sm">Weekly</span>
+                            <div class="text-center">
+                                <h2 class="text-3xl font-extrabold text-gray-800" id="overviewPercentage">+18%</h2>
+                                <p class="text-xs font-bold text-gray-500">From last week</p>
+                            </div>
+                            <div class="w-full flex flex-col gap-2 mt-2">
+                                <div class="relative">
+                                    <span class="absolute top-[-8px] left-2 bg-white px-1 text-[10px] text-gray-500">From</span>
+                                    <input type="date" id="overviewFromDate" class="w-full border border-gray-300 rounded-full px-4 py-2 text-sm text-gray-600 outline-none focus:border-[#659492]">
+                                </div>
+                                <div class="relative">
+                                    <span class="absolute top-[-8px] left-2 bg-white px-1 text-[10px] text-gray-500">To</span>
+                                    <input type="date" id="overviewToDate" class="w-full border border-gray-300 rounded-full px-4 py-2 text-sm text-gray-600 outline-none focus:border-[#659492]">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-[20px] shadow-sm flex flex-col gap-3">
+                        <h3 class="text-xl font-bold text-gray-800">Recent Orders</h3>
+                        
+                        <div id="recentOrdersContainer">
+                    </div>
+                    </div>
+
+                    <div id="adminOrderModalOverview" class="fixed inset-0 z-50 hidden justify-center items-center bg-black/50 backdrop-blur-sm">
+                        <div class="bg-white w-full max-w-2xl rounded-[30px] shadow-2xl p-8 relative m-4 max-h-[80vh] overflow-y-auto">
+                            <div class="flex justify-between items-center mb-6">
+                                <h2 class="text-2xl font-bold text-gray-800">Order Details</h2>
+                                <button id="closeAdminOrderModalOverview" class="text-gray-500 hover:text-gray-700 text-2xl leading-none">&times;</button>
+                            </div>
+                            <div class="mb-6 pb-6 border-b border-gray-200">
+                                <div class="grid grid-cols-2 gap-4 mb-4">
+                                    <div>
+                                        <p class="text-sm text-gray-600">Order ID</p>
+                                        <p class="text-lg font-bold text-gray-800" id="adminModalOrderIdOverview">-</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Customer</p>
+                                        <p class="text-lg font-bold text-gray-800" id="adminModalOrderCustomerOverview">-</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Order Date</p>
+                                        <p class="text-lg font-bold text-gray-800" id="adminModalOrderDateOverview">-</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Status</p>
+                                        <p class="text-lg font-bold" id="adminModalOrderStatusOverview">-</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">Total Amount</p>
+                                        <p class="text-lg font-bold text-gray-800" id="adminModalOrderTotalOverview">-</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-800 mb-4">Items</h3>
+                                <div id="adminModalOrderItemsOverview" class="space-y-3">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let monthlyData = [];
+        let chartInstance = null;
+
+        async function loadOverview() {
+            try {
+                const [metricsRes, ordersRes, monthlyRes] = await Promise.all([
+                    fetch('/api/admin/overview/metrics'),
+                    fetch('/api/admin/overview/recent-orders'),
+                    fetch('/api/admin/sales/monthly')
+                ]);
+                const metrics = await metricsRes.json();
+                const orders = await ordersRes.json();
+                monthlyData = await monthlyRes.json();
+
+                document.getElementById('overviewRevenue').textContent =
+                    '₱' + (metrics.totalRevenue || 0).toLocaleString();
+                document.getElementById('overviewInventory').textContent = metrics.inventory || 0;
+                document.getElementById('overviewCustomers').textContent = metrics.totalCustomers || 0;
+
+                const container = document.getElementById('recentOrdersContainer');
+                container.innerHTML = '';
+                orders.forEach(o => {
+                    const div = document.createElement('div');
+                    div.className = 'border border-gray-800 rounded-full px-8 py-3 flex items-center justify-between hover:bg-gray-50 transition text-sm md:text-base cursor-pointer';
+                    div.innerHTML = `
+                        <span class="font-medium text-gray-700 w-1/5">#OR${o.id}</span>
+                        <span class="font-medium text-gray-700 w-1/5">${o.username || 'Unknown'}</span>
+                        <span class="text-gray-500 w-1/4 text-center">${new Date(o.order_date).toLocaleString()}</span>
+                        <span class="font-bold text-[#659492] w-1/5 text-center">${o.status || ''}</span>
+                        <span class="font-bold text-gray-800 w-1/5 text-right">₱${o.total_amount || 0}</span>
+                    `;
+                    div.addEventListener('click', () => openAdminOrderModalOverview(o.id));
+                    container.appendChild(div);
+                });
+
+                renderChart(monthlyData);
+
+                const fromInput = document.getElementById('overviewFromDate');
+                const toInput = document.getElementById('overviewToDate');
+                fromInput.addEventListener('change', () => updateChart());
+                toInput.addEventListener('change', () => updateChart());
+            } catch (err) {
+                console.error('Failed to load overview', err);
+            }
+        }
+
+        function renderChart(data) {
+            let labels = data.map(d => d.month_name || ('M' + (d.month || '')));
+            let chartData = data.map(d => (d.revenue || 0) / 1000);
+            if (!labels || labels.length === 0) {
+                labels = ['No data'];
+                chartData = [0];
+            }
+
+            const canvas = document.getElementById('overviewRevenueChart');
+            canvas.style.width = '100%';
+            canvas.style.display = 'block';
+            const ctx = canvas.getContext('2d');
+
+            if (chartInstance) chartInstance.destroy();
+            chartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Revenue (₱k)',
+                        data: chartData,
+                        borderColor: '#34D399',
+                        backgroundColor: 'rgba(212, 250, 229, 0.3)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#34D399',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) { return '₱' + value + 'k'; }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateChart() {
+            const fromInput = document.getElementById('overviewFromDate').value;
+            const toInput = document.getElementById('overviewToDate').value;
+            let filteredData = monthlyData;
+
+            if (fromInput || toInput) {
+                const fromDate = fromInput ? new Date(fromInput) : new Date('1970-01-01');
+                const toDate = toInput ? new Date(toInput) : new Date('2099-12-31');
+                
+                filteredData = monthlyData.filter(d => {
+                    if (!d.month) return true;
+                    const monthDate = new Date(new Date().getFullYear(), parseInt(d.month) - 1, 1);
+                    return monthDate >= fromDate && monthDate <= toDate;
+                });
+            }
+
+            renderChart(filteredData.length > 0 ? filteredData : monthlyData);
+        }
+
+        function escapeHtml(str) {
+            return String(str || '').replace(/[&<>"']/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[s]));
+        }
+
+        async function openAdminOrderModalOverview(orderId) {
+            try {
+                const res = await fetch(`/api/admin/orders/${orderId}`);
+                if (!res.ok) throw new Error('Failed to fetch order details');
+                const { order, items } = await res.json();
+
+                document.getElementById('adminModalOrderIdOverview').textContent = '#' + order.id;
+                document.getElementById('adminModalOrderCustomerOverview').textContent = escapeHtml(order.username || 'Unknown');
+                document.getElementById('adminModalOrderDateOverview').textContent = new Date(order.order_date).toLocaleDateString();
+                document.getElementById('adminModalOrderStatusOverview').textContent = escapeHtml(order.status || 'N/A');
+                document.getElementById('adminModalOrderTotalOverview').textContent = '₱' + (order.total_amount || 0);
+
+                const itemsContainer = document.getElementById('adminModalOrderItemsOverview');
+                itemsContainer.innerHTML = '';
+                if (!items || items.length === 0) {
+                    itemsContainer.innerHTML = '<p class="text-gray-500">No items in this order.</p>';
+                } else {
+                    items.forEach(it => {
+                        const row = document.createElement('div');
+                        row.className = 'border border-gray-200 rounded-lg p-3 flex items-center justify-between';
+                        row.innerHTML = `
+                            <div>
+                                <p class="font-semibold text-gray-800">${escapeHtml(it.product_name)}</p>
+                                <p class="text-sm text-gray-600">Qty: ${it.quantity}</p>
+                            </div>
+                            <p class="font-bold text-gray-800">₱${it.price}</p>
+                        `;
+                        itemsContainer.appendChild(row);
+                    });
+                }
+
+                document.getElementById('adminOrderModalOverview').classList.remove('hidden');
+                document.getElementById('adminOrderModalOverview').classList.add('flex');
+            } catch (err) {
+                console.error(err);
+                alert('Failed to load order details');
+            }
+        }
+
+        function closeAdminOrderModalOverview() {
+            document.getElementById('adminOrderModalOverview').classList.add('hidden');
+            document.getElementById('adminOrderModalOverview').classList.remove('flex');
+        }
+
+        document.getElementById('closeAdminOrderModalOverview').addEventListener('click', closeAdminOrderModalOverview);
+        document.getElementById('adminOrderModalOverview').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('adminOrderModalOverview')) closeAdminOrderModalOverview();
+        });
+
+        window.addEventListener('DOMContentLoaded', loadOverview);
+    </script>
+
+</body>
+</html>

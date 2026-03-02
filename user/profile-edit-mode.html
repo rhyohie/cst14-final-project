@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    </style>
+</head>
+<body class="bg-[#659492] h-screen flex flex-col overflow-hidden text-[#333]">
+
+    <header class="h-[80px] flex justify-between items-center px-10 text-white shrink-0">
+        <div class="flex items-center gap-3 font-bold text-lg">
+            <img src="../icons/Octagon.svg" alt="Logo" class="w-8 h-8">
+            <span>Sample Logo Here</span>
+        </div>
+        <div class="flex items-center gap-3 font-medium">
+            <img src="../icons/Pfp.jpg" alt="Profile" class="w-9 h-9 rounded-full object-cover bg-gray-300">
+            <span id="headerUsername">Loading...</span>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        
+        <aside class="w-[280px] flex flex-col justify-between p-6 pb-10 shrink-0">
+            <nav class="flex flex-col gap-4 mt-4">
+                <a href="profile.html" class="flex items-center gap-4 px-6 py-3 bg-white text-[#659492] rounded-full font-bold shadow-md transition-transform hover:scale-105">
+                    <img src="../icons/UserI.svg" alt="Account" class="w-6 h-6">
+                    <span>My Account</span>
+                </a>
+                <a href="cart.html" class="flex items-center gap-4 px-6 py-3 font-bold text-white hover:bg-white/10 rounded-full transition-colors">
+                    <img src="../icons/CartI.svg" alt="Cart" class="w-6 h-6">
+                    <span>Cart</span>
+                </a>
+                <a href="orders.html" class="flex items-center gap-4 px-6 py-3 font-bold text-white hover:bg-white/10 rounded-full transition-colors">
+                    <img src="../icons/GiftA.svg" alt="Orders" class="w-6 h-6">
+                    <span>Orders</span>
+                </a>
+                <a href="address.html" class="flex items-center gap-4 px-6 py-3 font-bold text-white hover:bg-white/10 rounded-full transition-colors">
+                    <img src="../icons/HomeA.svg" alt="Addresses" class="w-6 h-6">
+                    <span>Addresses</span>
+                </a>
+                
+                <a href="../Homepage/homepage.html">
+                    <button class="w-full py-3 bg-white text-[#333] font-bold rounded-full shadow-md hover:bg-gray-100 transition">
+                        Back to Shop
+                    </button>                    
+                </a>                
+            </nav>
+            <div class="flex flex-col gap-80">
+                <a href="../login/login.html">
+                    <button class="w-full py-3 bg-white text-[#333] font-bold rounded-full shadow-md hover:bg-gray-100 transition">
+                        Log Out
+                    </button>
+                </a>    
+            </div>
+        </aside>
+
+        <main class="flex-1 bg-white rounded-tl-[50px] p-4 md:p-10 overflow-y-auto relative flex justify-center items-center">
+            
+            <div class="bg-white w-[95%] max-w-6xl rounded-[30px] shadow-[0px_10px_30px_rgba(0,0,0,0.1)] p-12 border border-gray-100 relative">
+            
+                <h2 class="text-2xl font-bold text-gray-800 mb-1 uppercase tracking-wide">Edit Your Profile</h2>
+                
+                <div class="w-full max-w-4xl mx-auto">
+                    
+                    <div class="flex justify-center mb-4">
+                        <div class="w-32 h-32 rounded-full overflow-hidden shadow-lg relative group cursor-pointer">
+                            <img src="../icons/Pfp.jpg" alt="Profile" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                                <img src="../icons/edit.svg" class="w-8 h-8 brightness-0 invert">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end mb-4">
+                        <button type="button" onclick="showPasswordModal()" class="w-[135px] py-2 bg-teal-700 text-white text-md font-semibold rounded-full hover:bg-teal-800 transition shadow-md text-center inline-block">
+                            Save
+                        </button>
+                    </div>
+
+                    <form id="profileForm" onsubmit="handleSave(event)" class="space-y-5">
+                        
+                        <div>
+                            <label class="block mb-1 px-5 font-bold text-gray-700 text-md">Username</label>
+                            <input type="text" id="username" name="username" class="w-full px-5 py-3 border border-gray-300 rounded-full outline-none focus:border-[#659492] focus:ring-1 focus:ring-[#659492] bg-white text-gray-900" disabled>
+                        </div>
+
+                        <div>
+                            <label class="block mb-1 px-5 font-bold text-gray-700 text-md">Email</label>
+                            <input type="email" id="email" name="email" class="w-full px-5 py-3 border border-gray-300 rounded-full outline-none focus:border-[#659492] focus:ring-1 focus:ring-[#659492] bg-white text-gray-900">
+                        </div>
+
+                        <div>
+                            <label class="block mb-1 px-5 font-bold text-gray-700 text-md">Password</label>
+                            <div class="relative">
+                                <input id="passwordField" type="password" name="password" class="w-full px-5 py-3 border border-gray-300 rounded-full outline-none focus:border-[#659492] focus:ring-1 focus:ring-[#659492] bg-white text-gray-900 pr-12">
+                                
+                                <button type="button" onclick="togglePassword()" class="absolute right-5 top-1/2 -translate-y-1/2 focus:outline-none cursor-pointer hover:opacity-70 transition">
+                                    <img src="../icons/Eye.svg" alt="Show" class="w-6 h-6 opacity-60">
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div> 
+            </div>
+        </main>
+    </div>
+
+    <div id="passwordModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-8 max-w-md w-[90%] shadow-2xl">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">Confirm Password</h3>
+            <p class="text-gray-600 mb-6">Please enter your current password to save changes.</p>
+            
+            <div class="relative mb-6">
+                <input type="password" id="confirmPassword" placeholder="Enter your password" class="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none focus:border-[#659492] focus:ring-1 focus:ring-[#659492]">
+                <button type="button" onclick="toggleConfirmPassword()" class="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer">
+                    <img src="../icons/Eye.svg" alt="Show" class="w-5 h-5 opacity-60">
+                </button>
+            </div>
+
+            <div class="flex gap-3 justify-end">
+                <button type="button" onclick="closePasswordModal()" class="px-6 py-2 bg-gray-300 text-gray-800 font-semibold rounded-lg hover:bg-gray-400 transition">
+                    Cancel
+                </button>
+                <button type="button" onclick="verifyAndSave()" class="px-6 py-2 bg-[#659492] text-white font-semibold rounded-lg hover:bg-[#537a78] transition">
+                    Verify & Save
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUserId = null;
+
+        function checkAuth() {
+            currentUserId = localStorage.getItem('userId');
+            if (!currentUserId) {
+                alert('Please log in first');
+                window.location.href = 'login/login.html';
+                return;
+            }
+            loadUserProfile(currentUserId);
+        }
+
+        async function loadUserProfile(userId) {
+            try {
+                const response = await fetch(`http://localhost:3000/api/users/${userId}`);
+                const user = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('username').value = user.username;
+                    document.getElementById('email').value = user.email;
+                    document.getElementById('headerUsername').textContent = user.username;
+                    document.getElementById('passwordField').value = '';
+                } else {
+                    alert('Error loading profile');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error connecting to server');
+            }
+        }
+
+        function togglePassword() {
+            var x = document.getElementById("passwordField");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+
+        function toggleConfirmPassword() {
+            var x = document.getElementById("confirmPassword");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+
+        function showPasswordModal() {
+            document.getElementById('passwordModal').classList.remove('hidden');
+            document.getElementById('confirmPassword').value = '';
+        }
+
+        function closePasswordModal() {
+            document.getElementById('passwordModal').classList.add('hidden');
+            document.getElementById('confirmPassword').value = '';
+        }
+
+        async function verifyAndSave() {
+            const currentPassword = document.getElementById('confirmPassword').value;
+            const email = document.getElementById('email').value;
+            const newPassword = document.getElementById('passwordField').value;
+
+            if (!currentPassword) {
+                alert('Please enter your current password');
+                return;
+            }
+
+            if (!email) {
+                alert('Email is required');
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/users/${currentUserId}/update`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        currentPassword: currentPassword,
+                        email: email,
+                        newPassword: newPassword || null
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert('Profile updated successfully!');
+                    closePasswordModal();
+                    window.location.href = 'profile.html';
+                } else {
+                    alert('Error: ' + (data.error || 'Failed to update profile'));
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error connecting to server');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', checkAuth);
+    </script>
+</body>
+</html>

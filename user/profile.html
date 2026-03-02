@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    </style>
+</head>
+<body class="bg-[#659492] h-screen flex flex-col overflow-hidden text-[#333]">
+
+    <header class="h-[80px] flex justify-between items-center px-10 text-white shrink-0">
+        <div class="flex items-center gap-3 font-bold text-lg">
+            <img src="../icons/Octagon.svg" alt="Logo" class="w-8 h-8">
+            <span>Sample Logo Here</span>
+        </div>
+        
+        <div class="flex items-center gap-3 font-medium">
+            <img src="../icons/Pfp.jpg" alt="Profile" class="w-9 h-9 rounded-full object-cover bg-gray-300">
+            <span id="headerUsername">Loading...</span>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        
+        <aside class="w-[280px] flex flex-col justify-between p-6 pb-10 shrink-0">
+            
+            <nav class="flex flex-col gap-4 mt-4">
+                
+                <a href="profile.html" class="flex items-center gap-4 px-6 py-3 bg-white text-[#659492] rounded-full font-bold shadow-md transition-transform hover:scale-105">
+                    <img src="../icons/UserI.svg" alt="Account" class="w-6 h-6">
+                    <span>My Account</span>
+                </a>
+
+                <a href="cart.html" class="flex items-center gap-4 px-6 py-3 font-bold text-white hover:bg-white/10 rounded-full transition-colors">
+                    <img src="../icons/CartI.svg" alt="Cart" class="w-6 h-6">
+                    <span>Cart</span>
+                </a>
+
+                <a href="orders.html" class="flex items-center gap-4 px-6 py-3 font-bold text-white hover:bg-white/10 rounded-full transition-colors">
+                    <img src="../icons/GiftA.svg" alt="Orders" class="w-6 h-6">
+                    <span>Orders</span>
+                </a>
+
+                <a href="address.html" class="flex items-center gap-4 px-6 py-3 font-bold text-white hover:bg-white/10 rounded-full transition-colors">
+                    <img src="../icons/HomeA.svg" alt="Addresses" class="w-6 h-6">
+                    <span>Addresses</span>
+                </a>
+                
+                <a href="../Homepage/homepage.html">
+                    <button class="w-full py-3 bg-white text-[#333] font-bold rounded-full shadow-md hover:bg-gray-100 transition">
+                        <span>Back to Shop</span>
+                    </button>                    
+                </a>                
+            </nav>
+
+            <div class="flex flex-col gap-80">
+                <a href="../login/login.html">
+                    <button class="w-full py-3 bg-white text-[#333] font-bold rounded-full shadow-md hover:bg-gray-100 transition">
+                        Log Out
+                    </button>
+                </a>
+            </div>
+
+        </aside>
+
+        <main class="flex-1 bg-white rounded-tl-[50px] p-4 md:p-10 overflow-hidden relative flex justify-center items-center">
+    
+            <div class="bg-white w-[95%] max-w-6xl rounded-[30px] shadow-[0px_10px_30px_rgba(0,0,0,0.1)] p-12 border border-gray-100 relative">
+            
+                <h2 class="text-2xl font-bold text-gray-800 mb-1 uppercase tracking-wide">My Profile</h2>
+                    
+                <div class="w-full max-w-4xl mx-auto">
+                    
+                    <div class="flex justify-center mb-4">
+                        <div class="w-32 h-32 rounded-full overflow-hidden shadow-lg">
+                            <img src="../icons/Pfp.jpg" alt="Profile" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end mb-4">
+                        <a href="profile-edit-mode.html" class="px-8 py-2 bg-[#659492] text-white text-md font-semibold rounded-full hover:bg-[#537a78] transition shadow-md">
+                            Edit Profile
+                        </a>
+                    </div>
+
+                    <form class="space-y-5">                                    
+                        <div>
+                            <label class="block mb-1 px-5 font-bold text-gray-700 text-md">Username</label>
+                            <input id="username" type="text" disabled class="w-full px-5 py-3 border border-gray-300 rounded-full outline-none bg-gray-50 text-gray-500 cursor-not-allowed">
+                        </div>
+
+                        <div>
+                            <label class="block mb-1 px-5 font-bold text-gray-700 text-md">Email</label>
+                            <input id="email" type="email" disabled class="w-full px-5 py-3 border border-gray-300 rounded-full outline-none bg-gray-50 text-gray-500 cursor-not-allowed">
+                        </div>
+
+                        <div>
+                            <label class="block mb-1 px-5 font-bold text-gray-700 text-md">Member Since</label>
+                            <input id="createdAt" type="text" disabled class="w-full px-5 py-3 border border-gray-300 rounded-full outline-none bg-gray-50 text-gray-500 cursor-not-allowed">
+                        </div>
+                    </form>
+                </div> 
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function checkAuth() {
+            const userId = localStorage.getItem('userId');
+            if (!userId) {
+                alert('Please log in first');
+                window.location.href = 'login/login.html';
+                return;
+            }
+            loadUserProfile(userId);
+        }
+        async function loadUserProfile(userId) {
+            try {
+                const response = await fetch(`http://localhost:3000/api/users/${userId}`);
+                const user = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('username').value = user.username;
+                    document.getElementById('email').value = user.email;
+                    document.getElementById('headerUsername').textContent = user.username;
+                    document.getElementById('createdAt').value = new Date(user.created_at).toLocaleDateString();
+                } else {
+                    alert('Error loading profile');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error connecting to server');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', checkAuth);
+    </script>
+
+</body>
+</html>
